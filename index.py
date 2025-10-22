@@ -2,6 +2,8 @@ import asyncio
 import aiosqlite
 from datetime import datetime
 from playwright.async_api import async_playwright
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 DB_FILE = "aweme_full.db"
 
@@ -135,12 +137,56 @@ async def run(urls):
             await asyncio.sleep(60)
             await browser.close()
 
+# 定义要抓取的用户URL列表
+DEFAULT_URLS = [
+    "https://www.douyin.com/user/MS4wLjABAAAA75EbUN-VEfEiyyidKjBKLw4vza41ET_RS8PK_2LySF6UugM_nPdFUKBEb_-2gX2m",  # 灿晟数码严选工作室认证徽章
+    "https://www.douyin.com/user/MS4wLjABAAAAD-_Dk8WpxkT43dZ-Ib5pza05hI7LKsWo3jR766miHKftsKGdvITpEz48-hZKwXCw",  # tutu
+    "https://www.douyin.com/user/MS4wLjABAAAAAXviISIVZECvu_zsrSC812o7cx6HWQDJMALk-CwR8cTNu0KoqF0YJwooVwdhYykE",  # 对的
+    "https://www.douyin.com/user/MS4wLjABAAAALoETvdflpmaXqD5jQxReulB_qxkcP34JNBI24kdEyZw",  # 守护者
+    "https://www.douyin.com/user/MS4wLjABAAAAIiLGcuZGSJxc4okvtGARBEpx4N4VDDw1tmyB6JG2viQ"  # 壳岸
+]
+
+# 定时任务函数
+async def scheduled_task():
+    print(f"\n📅 开始定时抓取任务 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    try:
+        await run(DEFAULT_URLS)
+        print(f"✅ 定时抓取任务完成 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    except Exception as e:
+        print(f"❌ 定时抓取任务出错: {e}")
+
+# 启动定时任务
+async def start_scheduler():
+    # 创建调度器
+    scheduler = AsyncIOScheduler()
+    
+    # 添加每天执行一次的任务（默认在凌晨1点执行）
+    scheduler.add_job(
+        scheduled_task,
+        trigger=CronTrigger(hour=1, minute=0),  # 每天凌晨1点执行
+        id='daily_scrape',
+        name='抖音用户视频每天抓取',
+        replace_existing=True
+    )
+    
+    # 启动调度器
+    scheduler.start()
+    print(f"🚀 定时任务已启动 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("📅 每天凌晨1:00自动执行抓取任务")
+    print("🔄 按 Ctrl+C 停止任务")
+    
+    # 立即执行一次抓取任务
+    print("\n🔄 立即执行一次抓取任务")
+    await scheduled_task()
+    
+    # 保持程序运行
+    try:
+        while True:
+            await asyncio.sleep(86400)  # 睡眠一天
+    except KeyboardInterrupt:
+        print("\n🛑 定时任务已停止")
+        scheduler.shutdown()
+
 if __name__ == "__main__":
-    urls = [
-        "https://www.douyin.com/user/MS4wLjABAAAA75EbUN-VEfEiyyidKjBKLw4vza41ET_RS8PK_2LySF6UugM_nPdFUKBEb_-2gX2m",  # 灿晟数码严选工作室认证徽章
-        "https://www.douyin.com/user/MS4wLjABAAAAD-_Dk8WpxkT43dZ-Ib5pza05hI7LKsWo3jR766miHKftsKGdvITpEz48-hZKwXCw",  # tutu
-        "https://www.douyin.com/user/MS4wLjABAAAAAXviISIVZECvu_zsrSC812o7cx6HWQDJMALk-CwR8cTNu0KoqF0YJwooVwdhYykE",  # 对的
-        "https://www.douyin.com/user/MS4wLjABAAAALoETvdflpmaXqD5jQxReulB_qxkcP34JNBI24kdEyZw",  # 守护者
-        "https://www.douyin.com/user/MS4wLjABAAAAIiLGcuZGSJxc4okvtGARBEpx4N4VDDw1tmyB6JG2viQ"  # 壳岸
-    ]
-    asyncio.run(run(urls))
+    # 启动定时任务调度器
+    asyncio.run(start_scheduler())

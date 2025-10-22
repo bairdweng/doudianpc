@@ -1,0 +1,37 @@
+# 数据库文件
+aweme_full.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 虚拟环境
+venv/
+env/
+environment/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/
+
+# 测试
+.pytest_cache/
+
+# 其他
+*.bak
+*.tmp
+*.temp
