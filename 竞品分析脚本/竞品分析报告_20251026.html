@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品数据分析报告 - 20251026</title>
+    <style>
+        /* 商业主题CSS样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            font-size: 1.8em;
+        }
+        
+        .section h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+        
+        .info-box {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 120px;
+        }
+        
+        .table-container {{
+            overflow-x: auto;
+            margin: 20px 0;
+        }}
+        
+        img {{
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }}
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .conclusion {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .conclusion h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .conclusion ul {
+            padding-left: 20px;
+        }
+        
+        .conclusion li {
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>产品数据分析报告</h1>
+            <p>基于最近1天采集的数据生成</p>
+        </div>
+        
+        <div class="section">
+            <h2>报告信息</h2>
+            <div class="info-box">
+                <div class="info-item">
+                    <span class="info-label">生成时间:</span>
+                    <span>2025-10-26 23:43:29</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">分析范围:</span>
+                    <span>最近1天采集的数据</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">数据来源:</span>
+                    <span>product_data.db</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>1. 平台增长率TOP5产品</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>店铺名称</th>
+                            <th>产品名称</th>
+                            <th>增长率</th>
+                            <th>产品图片</th>
+                            <th>二维码</th>
+                            <th>产品ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>莱贺优品个体店</td>
+                            <td>适用华为matex5/x6典藏版手机壳mateXT超薄定制magicv5手机壳关公</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_a1659e512bed7a8f1ed3b5ed05e314ad_sx_814512_www1417-1417" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvklEQVR42uyYwa3zIBCEB/nAkRLoxG7Mih25MdwJJXDkgJhfg/MS/+8VYCyFY/JdwLOzs4vv+Z4bHkuSOysermCIBZhstbt+TTcCImD3ZBLcFgcWb5lNNgkYegJIGzC61RW/sYDBkntauHUG7Gki0+yLJzHlKZsOgeCCW53uAOjvGwKADa666lYsEkyA4f5LUVcDrfTS6J5p9lsUkMe/tXkt0I7hzic3qvgwMfyxuosBGxlYMbrqyOLhMbHCJJOW1A2gx84jRixpIeMQJVtZr1txKyAc6nBbhGcE2jXh3oLpAPBkNqzuydUzDsyAVF1/Sq8HwDJPr37BOIPNmbkn8zaxDgB4VZrbuboC+CFmPfUIk4YbAc3lmAzlcqsvXprOhqtjPwDA0GqNEgx1qSzbOxlxD4DyYXvbRYKhJQwDHm/ZdwGo1SZI1YoHamqwJwvrAbC0gaF9/EEtTXYx2orHrYBXaw6O1M1a6A2YzqruAbDBMqkfz36Vy4VssoCtH8BSpZemZNJARsYMTCSfp6jWAWADq5ONbXGIzWklcw2P9wGUzV73UmuG/7nmp6H0AMgvoASxcYVmNe65BbN+AEsgj47pgRkzNJjzyA/vb3E9ALXa6jSJl/bUAPemiM81rweaiSXg0bYHL3nsaUnDjYA281ZXsaQZ8EWD+ZSVy5d+AOCoNY0PLL4c34JcP835esDGPLX1UXtqjQ9Tlj8/3+2kA6DFRWha1GDO0uzCij9n2u4BfzSII/RGqgkecf1jINcDR8ipR+nF5nJkwPJrUXMp8Fom720wn32RN4+2mR76AY5lsgxh9tJDm3kDPmuaLoC2TNZzy2nJn6ul/zfeNwB2BlePPa2XgQCn/NAPwKTGtrTWbJnhVgw9AccyGeZYgPr2ozrvjH6A1zIZhqv08BofzlHtBsD3fE9X518AAAD//yCv+orqd6x4AAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3771363428808130590</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>蛋壳数码3a</td>
+                            <td>钛合金裸感适用苹果17手机壳17ProMax/17pro磁吸iPhone17pro防摔</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_9d4ad71b6b10f0d882c5e75b75903f4a_sx_530782_www1600-1600" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvklEQVR42uyZwa3zIBCEx+LAkRLoBBqzDFEaw51QAkcOFvNr13lJfqUAEyl7ip3v8CDL7AwPv/rVF5YlyZ17W1qqK0wl+9IXedu+CKiA3dvC4bInWUkOuzfAzASQdpc/2WWYenh57EtLvE8GFLdzAJ7V0BYEu08I7PrZ1NXDd/T4uczpAcAWJ7/FnXdpmGI/O+pqQI9eC+7WVn+vh7elB+mg/8/mtcBZriAxI1XIRsf+oXXXArbqOgY2iIhJsSBgc08Rux7QLg2uYHN3Hp7VErEHN5C+CLDVFg5EZhhmkIgsiG1z96kAIjiKIFRT9dU548xMQAfZZNTKvACgPe3yq6tnAFge/UAeHh7grv3wmrzzA/A9qqQlHgAOdPSlR46/hpkCgJ40kZDVHzh8j3bY4d6l+HJAutoOBCx86EOxew/Amz5cD9CWHsXR6labyqLK/KdxcwDiYWT2prZi9SJiVjSN/5mc6QHKNGZxt2Z4QMylfN3Sy2BMANTT6LTNHWJ7SXbpnuFmAmQVwe0NKmIaxGKHu706agKgIurkla2+07DrY3tOjG8B0Bc5jDqajRp1y7a9W/frAZE1ceaqcYaImieG9M8sgFSHGy6rN5dg3oMdcwH2lLCFbCsSZcY9pPgZxK4H5A0ePttnaBCLPeAcH98D2CKjWeVDADU5ki6fy7wesJQ3LbgsguBZJfJYmRd/+jAF8MiPSUyObLUGMcC9Td7rAf16YdbDx3pmHN7erhe+A+BpGVYFSAQN88/f4npAa2kBm8s+a8bRhaX3a5qrgcdtkmw1/xoGeruYJwLOy2RxNanKVusVaMH2yrwzAHrDGcUPaKRl4S4T4+Vhvgbg/rBeRowZuzykNhcgR+/GLAkHiDJA3q+8ZgBkrOnHVKFd3XEq80TA+b+koXnhDA9Y+HE2Jwd+9aup6l8AAAD//6P/0nP7Yx3dAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3778884150552035614</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>守护者数码</td>
+                            <td>风景适用华为Mate70RS手机壳50RS/60Pro+/60Rs全包硬壳70Pro+防摔</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_b32d5b9541b6b12794eac328f08dc0cc_sx_475268_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwklEQVR42uyYQQ7jIAxFP8qCJUfgJuFiUUmVi5GbcAQvWSD+yCTttDMHCJHqXdHbuLH/t41f/OKGYUlyJyWyYsoVCLY/kHIjIAN2FyNwW55YvWXRB2AaCSBtwuxWwG+sYNIsJHIbDNglkLL46kmEMsMMCCSX3Oo0B6CEYsr9AMAm11xzK6IWTILhvxV1NdBbT2b3lMVvWYEy2/9681qgh+HOJzdq8yEw/Sd1FwM2M7Fhds2R1cMjsMGIkSjDAPBkMTIjSiTzlLVsuVPL40YAgO4XKsXwzEBPE+6jYC4H1CD0Szy5euaJBdCqbq/WGwGwLOHwC8e8gF2ZuYt5i9gAAHzvNMPmKuCnXPSvVseYbgR0ldNoWPzqqy9By5yr4zgAwFSC6MuqxuyZ1Jo/hXgEAME2l/DApAVDqwXTf8pAgFqtBJ7jgZpaKPOnhF0PWNrE5HjOtF14Z8x43Ao4rTmdRaxDb18eVvc9P1wM2GQpQfXBr13liin90wwE+N56QYxMZGYuQCD5fDffCIBm0RzVIPKUu9JqmT9UeG8DWOKVl1ozfE9z5/OvX1wP6OBlNYfmNq7QXY17gQ5m4wD22HgpDyxYoIs5VYoNK4YBdBJjcrqJ1/5X9+lRKyLKOID6xQzg4arfqOuD1oNEmW4E9J23uYYoC+CrLuah6FwexwGAQ9bkodbsqweK6X7xNufrAZt76wXpf7WuD6HoDPl8f4kBgD4uwjUYXcxZfVHp3eXxNdMOD3g1CPeSYlK3iT6uvwVkAOC8gUjkehxqqIqC+O+h5krgPCbvXBHz4qvul7PtoodxgNcxWaVY64HJJpvwV4iHAPox2YiRxW8kEY7U5PvifQNgZ3LtXIJKKEYL5uNoNgpAMQLEbs222eRWTCMBxzEZ5jiA+v6ozrtgHOA8JsOoPvC1Poj57s3BgV/8Yqj4EwAA//99uAZnfVb8SQAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3763092882815320227</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>莱贺优品个体店</td>
+                            <td>生锈铁皮适用华为mate60/70rs非凡大师手机壳50/40rs保时捷定制壳</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_453b3fe9e46517494f754e186a8f159d_sx_1401761_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACyElEQVR42uyYz63sLBTDjbJgSQl0kjQ2mjBKY9AJJbBkEcWffHJf7p+vgCHSsHnSu78NGWP7HHzO59zweJIszIFMmOoOLL50p/9tNwIq4EtDSFjrxD16dtddA6aRANJnLELixh3M/vClrdwGA0qbA7nHPZJY+gw3IJBDDinoDkBf7FPfDQB8Dkc4JBkJJsOx/FHUuwF7em0Or/aIWxXQZ1/+vs33AnYcC1/cuNWJWJj/Z3VvBnxl5oE5HKZrRCw84JpraxsGQCQ7MGNtK1mnKtmyUPK4EQBmFqkjbBWRFbBrIlyCGQCIfekLj/BiiqyTXckXHv+e3giAZ1+8BJMC6wM0Z2Zp7jKxAQBEe2mOR9iBONWuT63EmG4EmMup5iQ8Yoq7/TTdMQWOA0jV9tZSSArmyKxo/mnEIwBY/BFyYJskGHo1COB5yX4IQFHbnGSseqBQc33+trARAE+fqXqQgkWajHfGjOetgCua2R4ArPRmLD9VPQLgs2dTHj9iMpfrMGAbB5A/9KUtzbWJrKz2Z/L1s6q9G0D05BEoVdepmtNK5k8Z720AX6Fo1r0UzYh2zcJX+67uAwAd/rBQ25igWY2lWzEbCfAZql1PPPCABnOVRThen/r9gFVxTTkawvSpARZTxNXMBwDQz3+eYY8bxUsPbb1Kzh2AUzDhwCorjjus5OjHWccB7BZyOYTNtiCALbzSdzi/H/C1LxJyc9yjsld38OTripMBAKuLpx421RyZGHxpz1+ddnggKiCC7RejgtkWdyrrl4EMAOBrwjlCOhc1mtQy1j+LmrcC1zI5Ya2PuMPbNCHTwzjAv2UypWrZcbbCuH7LfgTAlsn63AJILDiX8r833jcAig0Q5xBkBpJ/9odhADbXgNWi2R9e+plGAs5lMty5AI04Tcwybhjga5kMxyQ9fI0Pzf1+m4MDn/M5Q53/AgAA//9R7OzUb9yKwwAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3761159614931009646</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>莱贺优品个体店</td>
+                            <td>定制适用华为matex5/x6典藏版手机壳matex3超薄华为mateXT轻薄</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p9-aio.ecombdimg.com/obj/ecom-shop-material/png_m_f7fd7aa4844be48fee995a9a4ea77e9c_sx_1474595_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwElEQVR42uyZwY3zOgyEx/BBR5WgTqTGjMhBGrM6UQk66mB4HoZevGT/LcAyEO4pznexliI/MvjGN24YjiQ3TDz8DgTAbdxc0dN2I6DqmWeb+KowBHClAfNIAOk2pPZArpn2QUDma0BgIivCjp5Y+jQi4Et7+BXATCQeuB9w5odnW7AoYVKf+vRPRl0N6JKVFv2zLeFV9+C2Hv/czYuBn0hckbkGnbv+/hS7SwFX3cbSUoMVsbl2HXW05BgHIJK9xbMtmCtChyptm7jeCnBqD4c//Br2sIcOZfVnRl0PIHDrEfArlrAHfdEjorceNwrgaI12888218y5drD0iKkt4wCqWpia8gGYKyuJaPmw3wkAabowtVyXwIpkL5nfVe56wP14GOBfdeZs9cT6xdsnBwCQKBPLbQkrdr3U4Sx/2jAA0BPgC1fMJHdLDxaunuMAjlKvNvHZcgVUxCQI7XErQFlt/eLAIg9DT2rN7643AqB+IckBPOuCPch6evrQxQEAQFevRTvZue42ijn+OuoBAFUIf3jKw6oGsZ569M93pb0BYFUuQk6zmD/oP9ETBwOQaKEcoUxMziMDHgvoqamLyc1tf1DswUetvhyoSKfkkHWukpwe3eYP5IEAcutQPnieJpZMctePaXF8QIev1qx+QeW0OrV9kQcClDLRl5YlXxXBEVOXqA8EaJx0hy9tagiaebk5adnzvZe7HsBpAxHZLh8MQcTjc2ofHnC1wx2InnzVue5w5wL0PakNAFhMZuevms8ZB27DR2u+HjiXyX7T2f4kDAtLe3zMvNcDtpcj2wMaHxBOXUT+tfG+HLANp30KGiHc1s9X+/8t7gIU88lsQ5AV4tTe/jAKYLrYZrt86nBd3eLXjwtXA+cvIDSntUWNo8ZJLBgHOJfJUsZXVe89xwcev+7m6MA3vjFU/BcAAP//T7ie1DHFogwAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3747854723265462607</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 各店铺增长率TOP5产品</h2>
+            <h3>2.1 莱贺优品个体店</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>适用华为matex5/x6典藏版手机壳mateXT超薄定制magicv5手机壳关公</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_a1659e512bed7a8f1ed3b5ed05e314ad_sx_814512_www1417-1417" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvklEQVR42uyYwa3zIBCEB/nAkRLoxG7Mih25MdwJJXDkgJhfg/MS/+8VYCyFY/JdwLOzs4vv+Z4bHkuSOysermCIBZhstbt+TTcCImD3ZBLcFgcWb5lNNgkYegJIGzC61RW/sYDBkntauHUG7Gki0+yLJzHlKZsOgeCCW53uAOjvGwKADa666lYsEkyA4f5LUVcDrfTS6J5p9lsUkMe/tXkt0I7hzic3qvgwMfyxuosBGxlYMbrqyOLhMbHCJJOW1A2gx84jRixpIeMQJVtZr1txKyAc6nBbhGcE2jXh3oLpAPBkNqzuydUzDsyAVF1/Sq8HwDJPr37BOIPNmbkn8zaxDgB4VZrbuboC+CFmPfUIk4YbAc3lmAzlcqsvXprOhqtjPwDA0GqNEgx1qSzbOxlxD4DyYXvbRYKhJQwDHm/ZdwGo1SZI1YoHamqwJwvrAbC0gaF9/EEtTXYx2orHrYBXaw6O1M1a6A2YzqruAbDBMqkfz36Vy4VssoCtH8BSpZemZNJARsYMTCSfp6jWAWADq5ONbXGIzWklcw2P9wGUzV73UmuG/7nmp6H0AMgvoASxcYVmNe65BbN+AEsgj47pgRkzNJjzyA/vb3E9ALXa6jSJl/bUAPemiM81rweaiSXg0bYHL3nsaUnDjYA281ZXsaQZ8EWD+ZSVy5d+AOCoNY0PLL4c34JcP835esDGPLX1UXtqjQ9Tlj8/3+2kA6DFRWha1GDO0uzCij9n2u4BfzSII/RGqgkecf1jINcDR8ipR+nF5nJkwPJrUXMp8Fom720wn32RN4+2mR76AY5lsgxh9tJDm3kDPmuaLoC2TNZzy2nJn6ul/zfeNwB2BlePPa2XgQCn/NAPwKTGtrTWbJnhVgw9AccyGeZYgPr2ozrvjH6A1zIZhqv08BofzlHtBsD3fE9X518AAAD//yCv+orqd6x4AAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3771363428808130590</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>生锈铁皮适用华为mate60/70rs非凡大师手机壳50/40rs保时捷定制壳</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_453b3fe9e46517494f754e186a8f159d_sx_1401761_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACyElEQVR42uyYz63sLBTDjbJgSQl0kjQ2mjBKY9AJJbBkEcWffHJf7p+vgCHSsHnSu78NGWP7HHzO59zweJIszIFMmOoOLL50p/9tNwIq4EtDSFjrxD16dtddA6aRANJnLELixh3M/vClrdwGA0qbA7nHPZJY+gw3IJBDDinoDkBf7FPfDQB8Dkc4JBkJJsOx/FHUuwF7em0Or/aIWxXQZ1/+vs33AnYcC1/cuNWJWJj/Z3VvBnxl5oE5HKZrRCw84JpraxsGQCQ7MGNtK1mnKtmyUPK4EQBmFqkjbBWRFbBrIlyCGQCIfekLj/BiiqyTXckXHv+e3giAZ1+8BJMC6wM0Z2Zp7jKxAQBEe2mOR9iBONWuT63EmG4EmMup5iQ8Yoq7/TTdMQWOA0jV9tZSSArmyKxo/mnEIwBY/BFyYJskGHo1COB5yX4IQFHbnGSseqBQc33+trARAE+fqXqQgkWajHfGjOetgCua2R4ArPRmLD9VPQLgs2dTHj9iMpfrMGAbB5A/9KUtzbWJrKz2Z/L1s6q9G0D05BEoVdepmtNK5k8Z720AX6Fo1r0UzYh2zcJX+67uAwAd/rBQ25igWY2lWzEbCfAZql1PPPCABnOVRThen/r9gFVxTTkawvSpARZTxNXMBwDQz3+eYY8bxUsPbb1Kzh2AUzDhwCorjjus5OjHWccB7BZyOYTNtiCALbzSdzi/H/C1LxJyc9yjsld38OTripMBAKuLpx421RyZGHxpz1+ddnggKiCC7RejgtkWdyrrl4EMAOBrwjlCOhc1mtQy1j+LmrcC1zI5Ya2PuMPbNCHTwzjAv2UypWrZcbbCuH7LfgTAlsn63AJILDiX8r833jcAig0Q5xBkBpJ/9odhADbXgNWi2R9e+plGAs5lMty5AI04Tcwybhjga5kMxyQ9fI0Pzf1+m4MDn/M5Q53/AgAA//9R7OzUb9yKwwAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3761159614931009646</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>定制适用华为matex5/x6典藏版手机壳matex3超薄华为mateXT轻薄</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p9-aio.ecombdimg.com/obj/ecom-shop-material/png_m_f7fd7aa4844be48fee995a9a4ea77e9c_sx_1474595_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwElEQVR42uyZwY3zOgyEx/BBR5WgTqTGjMhBGrM6UQk66mB4HoZevGT/LcAyEO4pznexliI/MvjGN24YjiQ3TDz8DgTAbdxc0dN2I6DqmWeb+KowBHClAfNIAOk2pPZArpn2QUDma0BgIivCjp5Y+jQi4Et7+BXATCQeuB9w5odnW7AoYVKf+vRPRl0N6JKVFv2zLeFV9+C2Hv/czYuBn0hckbkGnbv+/hS7SwFX3cbSUoMVsbl2HXW05BgHIJK9xbMtmCtChyptm7jeCnBqD4c//Br2sIcOZfVnRl0PIHDrEfArlrAHfdEjorceNwrgaI12888218y5drD0iKkt4wCqWpia8gGYKyuJaPmw3wkAabowtVyXwIpkL5nfVe56wP14GOBfdeZs9cT6xdsnBwCQKBPLbQkrdr3U4Sx/2jAA0BPgC1fMJHdLDxaunuMAjlKvNvHZcgVUxCQI7XErQFlt/eLAIg9DT2rN7643AqB+IckBPOuCPch6evrQxQEAQFevRTvZue42ijn+OuoBAFUIf3jKw6oGsZ569M93pb0BYFUuQk6zmD/oP9ETBwOQaKEcoUxMziMDHgvoqamLyc1tf1DswUetvhyoSKfkkHWukpwe3eYP5IEAcutQPnieJpZMctePaXF8QIev1qx+QeW0OrV9kQcClDLRl5YlXxXBEVOXqA8EaJx0hy9tagiaebk5adnzvZe7HsBpAxHZLh8MQcTjc2ofHnC1wx2InnzVue5w5wL0PakNAFhMZuevms8ZB27DR2u+HjiXyX7T2f4kDAtLe3zMvNcDtpcj2wMaHxBOXUT+tfG+HLANp30KGiHc1s9X+/8t7gIU88lsQ5AV4tTe/jAKYLrYZrt86nBd3eLXjwtXA+cvIDSntUWNo8ZJLBgHOJfJUsZXVe89xwcev+7m6MA3vjFU/BcAAP//T7ie1DHFogwAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3747854723265462607</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>苹果16Promax磁吸手机壳15pro磨砂玻璃无线充电17镜头全包防摔14</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/ZIsywlgi_m_417f16ea693a279acfed2cf76bfa834c_sx_65013_www800-800" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwElEQVR42uyYwa3rLBSEB3nBkhLoJDRmxY7cGHRCCSxZWJ5fc+Kbl/vfAoKlsHl60bfBd5iZc/A933PB40mykO0edkx1B5Iv+oFsFwIq4EtzDWGrE/fo2R1LA6aRANJnJP0vbtzB7A9f2sJtMKC0RHKPeySR+g1uQCCHHNagOwA9ddevBwA+hyMcYcUiwWT8VdSnAXt67RYebY5bFdBv/s/b/Cxgx7HwwY16fEjMf6zuw4CvzDxwC0eQrhGReMA115Y2DAC9thtuWNpC1qlKtiQljwsBYLa8kBUjsgJ2TYSXYAYAFBAIR3hwjawTOyBVHz9PbwTAsycvwayBdQbNmVmae5nYAACivTTHNexAnGpHlzxcmy4EmMvprJjjGvfYE0sXz3EAqVq/0QRDXUqqfjfiEQA8BcO2SDD0hGPG/SX7IQBFrdVFqh4o1Ny7hY0AePrMHHh2WhlvVxe7Xwo4ozljaTMAlV5mz3dVjwD47NkUzXtc5XK5u564hm0cwFNPr6Xm2kRW1g4oeR9vVW0AwGcegQqIOlU5LTNu0PB4JQDpvJeiGdGumcPjX158HlDx8vLeI2xcoVmNpVsxGwfw1WyN7Y4ZMzSYWzFz/PnUAwBWxXPQJL7bpwZYKHd+NfMBAJwjzT3scaN4JJa2/NPDBQCbeY9wPK047hrMU1cvX8YBgKetKdRsC2J/C+XFK5w/D/jak4QsGUdlr+7gyccrTgYArC7av2Gj7vGccdr9V6cdHogKCHubsmJSIre6/jKQAYBzByKXey5qyOwzlv8vaj4JnMvkwhVTneMOb9OETA/jAD/L5KXZnjYy+2LtESMBtkzWADHHjaR9eZLt98b7AkBhDsdzTxvNQPJ7fxgGoGY1LBbN/gDCimkk4LlMhnsuQKP9qOSdMQ5wLpPhuEoP5/jwVtWuAHzP9wx1/gsAAP///WID36muszoAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3582105244466856295</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>适用华为mate70rs/60rs非凡大师手机壳40rs/50rs保时捷防摔硬壳</td>
+                            <td>65%-70%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/webp_m_2b8919238b7dfcce4f3f093c68d76399_sx_27704_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwUlEQVR42uyYQa6jMBBEy2LhpY/gm8DFUCDiYuYmPoKXXljUqBomPzP/ADFSnMX/Im/TpF1d1fie77nh8SS588BSgCE3YPJ6QLLcCMiA3+3/JQ9s0bMCTnRPAOkTxrCGFjc2MPnD72Xh1hmwlzGwzLFFElOdqusQSCGFNagGQF/fEAB8Ckc4wopFDZPguP/XUZ8G7OqVMTzLHLcsoI7+1938LGDHceeTG7c8EBPTL6n7MOAzEw+M4Qhki4iYeMAVV5bSDaCXXacyYikLmYestpX0hhV3Aio0HgrClhGZASsT4dUwHQCRrBOP8OQamQdNC3X18ffq9QDoRV/zgnkGTZm5F/cSsQ4ARN20sHMNDYhDrqgjRrgy3AgwlWNxPDDHNbZYbepxDewHAJjqJCCsGsyRiZoYb0LcA4DJHyGZE5tB+lOMH6+27wLQqC36DLIHGmruXcJ6ADx9YgoHEKQOJhdq2setgGs0JyxlBmCmN2F67+oeAJ88i8S4xVUqlyoM2PoBpA91KpM1DDOzfU0+363a5wFPfwTJ2JaHLKVlUj9IeG8DyJvVsy6NZkQrM4Xnz0DpALD8CGnGxhXKatyrGbN+AE/zhywPzJihYM7TP7x+i88D0JMjKIk3e9WQe5Q6/y2zBwD1/POw7YHaAxP3svz0ww0An6tl3lOKY4OZHPnypR/AqpDKIWxssUWgOpLre8b5NOBznSTH1jDKvMoSnny+xkkHgNlF28opmLPFM+OUxz+etnsgakAE2mhWBJLpNbv+EpAOgMvk2OLuXNTog+W/Rc1HgWuZrCC25Tk25cvRVqAN/QDXMvmsQnJ8VfHT9j0AtkwGnAGkvXndxX833jcAdgWIc08bbU+LN//QD8DiigKlRrMnU1gx9AScy2S4cwEa7aEm74x+gGuZDMdV/XDFh3erdgPge76nq/MnAAD//9La6yGhePkwAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3741751969874837588</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 华壳3C数码</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>星河布达拉宫适用华为mate70非凡大师无边框手机壳mate6050rs防摔</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_96b61f31f257ffaac300222fedf37d58_sx_305831_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuUlEQVR42uyZwY20OhCEC3Hw0SE4E0gMjUGTGM7EIfTRB0Q9VbP/zuhtAGOk6T3BfhdMUV3dg29964YVSHLHwFNXCQg7Sxt0124EVN2LtMHGeiEY2mDA2BNAhh2zPSJrpl8MLJb57A6YMJAV6UCbdfI9ArHYI64ARmLmeUMACMUQaQsWCWZufxX1aUAfWbEpbrakZz1S2NsUyv++zQ8DPzVzReaadO76+2N2HwVClWvZbIgHkMbadNSTi6MfgG1ueorNFowVqYF7KDZwvRXgVnzGM67pSEdqkKrfFfV5QA2iTUBcsaQj6R9twhRPvZpegCAZk3vcbKyZY21gaRMGW/oB5Fr4d7JjZSUxuR6OOwEgZcXIluuSWCGRq1/8utzngfAvh2U+68ixXknM3vNkBwA8MHAzpBUHLjOWfqwbAGgzEE/dIXlIHgiFa2Q/gJyWxQYbLFdAJqaAoPR4I0Cq9tZ8xlU5DG0Ohfur6/UAyOUUcgDkukAhh2zzW1zsAZBrDTbFy8QOH8UC395FB8D1HPGMVA6r3uPmNsXt5bR3AJL3YmWaxfOD3kQb2BUgl/N0TmmESmJStRJwT0Dwp7Ds2dz3B+oXw8urOwDqjyFsZB2rQk6bJBDkjgDqjvTg2wOND2FXv3hNizcAdPjUh7dZpjTtnVqVOwKk6ykWywpfFSkwlKag3hGgcTKcDiBp5uUOTRPbay/3eQBXGvCzlSUIOTHh8T61dw+E2hDOuOMR9W0ecE2Tr0mtA8BLM45Paj7jtIHOWzfAtUyOxR74EQxDYbHHa+btAPC93HW2SXpwE1NTe994fxzwDecJxDUp1Yb9WnD8xoPbAMXzZPYhSGObh961M8Djoo2aeqvG8qZuMVpHwPULCD3T+qImkOq8C/oBrmXyTPJZ1Xuv8eHN5e4AfOtbXdV/AQAA//8e8p/qxQ2A7AAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3755992509596172595</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>高级保时捷适用华为mate70非凡大师无边框手机壳mate60rs防摔50rs</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_233cc4b1d5c5a0aca69a75391b39c08c_sx_271066_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACu0lEQVR42uyYQbK7LBDE23LBkiNwE7mYFU15MbwJR5glC8v+qiEvX97/HUCsCqtEfxuw6Z4ZfNd33XA5kty5kzww5gOIjvUv7UZABtyu337LI4/gWAbqwdgTQLqEaPBr2HiASbuwhVtnwG6RtDkcgUQssQwdAsknv3rtAdDrGwKAS/70p1+xSDAJfxV1NVCvnk3+aXPYsoAyuT9381qgroE7n9yoy4fI9MfqLgZcZuKJyZ+ePAICIk8MNthi3QCAbptNWGwh85glW+6UPO4EAEyeJitGYAbqNuE/BHM5oICAP/2Ta2AeWQCp+vy5ej0AjoguYfKrZ57B6szcbXibWAcAgm6alwAOIIy5oEyYMNh4I6C6HG2oqbeGI0jTZeDq2Q8gTZdokatfFcyBqcj2fon+egDRnfVsFwmGToJJeLxl3wWgqLUKqDyooSaRfyTG5YCjSzIxrrWmRSCLEuNxK+AVzQmLzQBq0buX+KnqHgCXHE3RfIS1ulwBBGz9AI7t6tlgI5mZ62vy+VGqXQ4o1Hh62diWxyynpWT+kPHeCMDPvhTNCHWbO5//B8r1gHocVTU8/cYV6tW4l2jLR8F5PUC0eHhgxgw15mz1w4FuALkWk1cnftSjBrhXRSzWD6C80Hr4I2xU+yA92GLjjQCXS+15mxWHQ415LKrLl34AoNmaPfzGIxwBKAOVce9wvh5wuURHi1aPWu1DLJMjn+8v0QFQy0VgAvxG7aP1OPb4VdN2D4QWEC8r1kUtrVx/G0gHQCty6pM2qGlF7/LPoOZS4DVMTq2dDAfaNKlVwN0AbZhcnTdIDzpsp+oRPQF1mAwMNoeNJGI7efs98b4BoG9xtjltkBHXbS7dAbTBgKVGs+pgv2LsCWjDZAxtABrqQyXvjH6A1zAZA1fp4dU+fJZqNwC+67u6Wv8FAAD//7aWDZ2GvZKZAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3766755068267855882</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 壳小寻数码</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>适用华为mate60pro手机壳mate70pro通70轻薄50pro无边框40pro硬壳</td>
+                            <td>0%-5%</td>
+                            <td><img src="https://p9-aio.ecombdimg.com/obj/ecom-shop-material/png_m_2474190c83ab22ddc9a7d0c1b4b6b6a1_sx_1385963_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvUlEQVR42uyZwY20OhCEC3Hoo0NwJjgxNGY0iZlMHIKPPiDqqeyVhv1fABhpG+0B73cAT7m7usFf/MUDw0gyYSov3XnAEk9MWi0PArLW3OneJeaOAJgKMI8EkJaw4OWYI9sNbC+RnwGBiczwB2rgXqcRAbeXl9sAzESQHh4HtK2HY1mxSjChTvVfRd0N6JDtZXHvsvpPPrylutj+z9m8GfiJwA2Rm9e+6/pfsrsVsGyJewkF7gD8nKu2emniGAegsU4l8F1WzBm+gsn2MnF7FpDsdLo2f/jDV0jVV0XdD6DJGHAbVn94/aMuWNypn2YUwMikP/cuc46ccwX3umAq6ziAshakB+3snJlJLE0Px5MAkLbzBBDz6pkRmueJ3yx3P2Ddh8k/fPLMOVtSCilXPzkA0B9b7+E3HCC1LP2UYQCgBqjuwunYHZKHHM/mOA5glPUq7bEzoCTWRPt6FIC++YGn2+TDUIPtTN+qNwKgeiGT048eZHJ4Ilzs4giAstZUFteT2NFaMePltxgA6O/hTkf5sKxGTPmB72+mfQBgmSrN8jRr8w9kDXVxYwHU1TxN5IdyYvLlJV6t2v0AQkWrYvLmbX6wt4VLrr4dyD8J4U3mOcvk1EUCQRwIUN76KRDdiQVLtnP7dosPAHq/4Mh3iZSmW6VWxIEAvYc8bpT5yvBGTFVGfSBA7aSpQEwFXj0vdQvpZxxAVbfKh8WeEpTEgAWva9c+PGC5wk4o937ynA80TZPfTm0AoE882UegsfU4FZZwKc33A32Y7HY9dhcM2/Tgdel57wfaXE5729qHVtSSJcRfE+/bgTbhVPuweblaS33AcfEPDwH25idja4LUttVw8Q+jAM0ulrkdPnmHqmrx6+PC3UD7AqK9laYFGKnKu2IcoA+TA8lPVu3t7QPPX2dzdOAv/mKo+C8AAP//B4d+G5l2FIYAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3764718712754667835</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>适用华为mate60pro手机壳60非凡大师无边框40/50rs皮卡丘手机硬壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/rxwfulMM_m_a256329150c749028215f9b8f7c94556_sx_1434186_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACxklEQVR42uyZwa27PBDEx+Lgo0twJ7gxFIhozHTiEnz0ATGfZsnHP++9AmKk+Bb0u9ia3Znd4Hu+54bHk+TGjLkCQ9mB5A+/6Wu9EVAAv1WEBUMZuEfP5poT3RNA+owRCHtcuYPZH3B15toZsNUxsE5xjyRSG7sEcshhCboD0JI99d0AwOdwhCMsmCWYDMftl6I+DVjp1TE86xTXIqCNf2vzs4Adx41PrlzLQCTmP63uw4AvzDwwhiOQe0REokrP1bl2A5hKR4yY60yWoegDN0oedwJ8PtUR1oLIAtg1ES7BdADIIBKP8OQSWQY2QKo+/i+9HgBPWS3GsASWCbTOzK26q4l1ACCq0sLGJexAHErTU8sxhhsB1uUUcw5McYl7bIlsjktgPwDArG+qNRlzZKYc460R9wCYYKDIIMHQ05MZj0v2XQCy2uokY8UDMzWJ/M0xPg54+swcyCWYpUXSGu/jVsBlzbQcZqFXP95U3QPgs2dNZ+lZl2uuJV2qH0ASbqmm6upAFpYGqBKfb1GtA8DTH4FSdRmKdVolsYca732AM9XoXrJmRLvmEZ71Lbp/GkBs6nKOR1i5QLMaN804V57sAFDolULqAxMmaDA3h3Pc0Q2grmVTjoYwPTVgG49/ybwHAK+R5mHbA40PSOIvPdwB8KXZzIu5TkDcNU2kplw+9wMAZ1vT+MA97hFozvzi3xD0ccCXljyrhpo9yns1S3jyedlJB4DFRQQlxFUxJ+rl/VYfPzJt90A0g9A11YopExwtrl8NpAPgDDkHHngtasjsM+Zfi5qPAq9l8sYFQ5niDq9pwpoe+gHOZbKqzfa00WbecwHeEWDLZI0PAkh7eZL158b7BsDGHI5zTxtbas6uOXcHWJ/DbNbs2ey/hp6Ac5kMdy5Ao32U807oB3gtk+G4SA+v8aG6n7XZOfA939PV+S8AAP//RhMT81lBLHwAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3718385462419783812</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>巴斯奎特适用华为mate60pro手机壳60非凡大师无边框40/50rs手机壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_416b35b74a9189bb26c40e17a55bad49_sx_1422906_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwUlEQVR42uyYwW30IBSEx/KB4yuBTkxj1torN4Y7oQSOHCzm1+DNZvOnAGMpXKKw3wXzmJn38Lf+1g2XI8md0cgVYzqA4Hbu2s03AhLg9gxbjWnk4R1L28DYE0C6iAmww288wOiq2/PCrTNgz5Mxz/7wJEKZMHQIRIu2ms4AlFCGcj8AcNGqVVuxqGAiBv5fUVcD7enlyZ559lsSUCb3621eC7Q1cOeTG7c0EoHxl9RdDLjEyIrJqpGHh0dgxZCHvORuAO2UkCcseSHTmFS23KnyuBEAgNWYYVuCZ9K/GDLso2AuB3QKWLUnVy/HKICqun49vR4ARwT5RTO1GWzKzD0PbxHrAIBvL23gagfgx1T0qeUY442ApnKKOVK51R++BDkGV2M/AMBYAslWMNShKMf4LPoOAATXVA6jCoaObi/A4132XQCy2mZqi+LBaWo/JOx6wNHFV+xeZGmeLMpij1sBL2uOryJW6G3Nw2o/88PFgIuOWQUz+1UqFwsQuNrWDyB9KCGHPOSRTEztZ71EdgQkF5vzDsphqSmtWp6HhPc2gATkW+USfDtmtGf+UJjLAd/y5MBqG1eoV+NeWjDrB1CPA8WuB2bMUGPOMz+87+J6AF87asL0qQHusrXvY3YAnH4BVanfqPSIID6PNwJcKnDVKpY8A/5ACzm6nKUfADhlLT9s4+GP8y7kF29zvh5wqQSVjMrYq+ctgdWRz/dNdAC0uKg/ixpzHl5f3u358SPTdg94GYQExCTFpLqJFtffAtIBcIYcsgLnoIauuojlv0HNpcB7mNzaSX/AsUxtBHqgH+BrmEy2Oa0nXdQpvsu+B6ANk/W5BZBfR8s/J943AHQX9ZzTqudtL/FjaNYLwCxjW5o1uwrYirEn4BwmYzgHoL5tynln9AO8hskYuKoeXu3DR1S7A/C3/lZX618AAAD//8kT4/sq8AEYAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3741531754134110625</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>适用华为mate60pro手机壳60rs无边框50rs玩具总动员40pro手机壳30</td>
+                            <td>-</td>
+                            <td><img src="https://p9-aio.ecombdimg.com/obj/ecom-shop-material/xvgvOaEy_m_8505bbb83cd876debbec57141b794fc0_sx_1683988_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvUlEQVR42uyYsa3jMBBEh1DAkCWwE7ExwZKhxqROWAJDBoLmMGufz/9+AV4BZnTQveAvPZzZXXzP91zwRJLceeKGCUM9gBL3HvS1XQioQNz178Q68MiRPVAfBk8AGTeMaUlHXnmAm5A2c3UG7G1M5JGPTKL04hLY0paWpBoA/fcFASBu6UxnWjBLMBt+K+rTgD29NqZ7m/JaBfQx7v+/zc8CdgJ33rlyrQNRuP2yug8DsXLjiTGdpmtkFJ4ILbS5uQF02b20EXObyTpUyVbWmxZcCejgmdiQ1orMCliZSC/BOAByL12/xJ1LVmJ0QKo+/z49D4Au+pkXrBNozsy9hZeJOQCQ7aUFnukA8lB18xgR2nAhwFxO58SUl3xkaboHLol+AIBbLyRNMFRRVGK8GbEHACWeaUv3NkgwjIxS9u0lexeAorYVRa3aA4VaebcwD0Bk3Kj2YEkWaZnsY1QffiXgGc2bMg+Aml61ve+q9gDELbLJjI+8mMv10AuXtDoCdLellRbaQFbWDjxeIj0BcYtK3qA+rJrTynpvMt4LASh4uVxFtjJ33v8FigNAjddpobZygWY17t0aMz9AlEIUDzdMmKDB3JYJgQfcALA/m3vTEKarBrgr1l5legCg/vCh0rzyKY+9zW968A/ot9DMi7lNQD40mJeuvnz2A1gVcrlbWm0LAtjCa3mfcT4NxNpLZNNQc2Rlr6aJSN5fceIAsHZRiggazHlk3Xzc2+1HT+seyBYQymJZMSne2vWXgTgAHk2OudxjUcN4xg3zf4uajwLPZfJme9opH+qBx2imBz/AY5ks552y9PDk/61pXAC2TA4tUE5L/i2t/dx4XwDYbYCwPW3upQcrc3YHmM9htmiOJ5AWDJ6AxzIZ4bEAzfZRyTvBD/BcJiNwkR6e40MLP9+mc+B7vsfV+RMAAP//AxTw4brZRQoAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3680840215569760403</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>蜡笔小新适用华为mate60pro手机壳mate70pro无边框40/5070pro硬壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_f1efe589801aae103d00b10615e810b3_sx_1595756_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACu0lEQVR42uyZwZHrIBBEW6UDR0IgE5GYysjlxFAmhMCRg0r9q0e7a+3fAISqPD4t+w4GmpmeMT7xiRuGI8mMCQ/MQABcZnarVuuNgKI1v/snXwWGAG6twNgTQLqMyB2pJNofA9ea+OoPqENNBWFDi8wYegT8Wh9+ATDSNnQ/4NCHZ50PXcc2tOE/RV0N6JGtdfLPOodX2YLLbfrzNi8GviJyQeISdO76/El2lwKuuMy1xgq/AWEsTUc9mTj6AeiIWCOfdcZYEBqUaevA5VYA4HavzxK2sIUGqfqsqOsBBGa9NL9gDlvQP9qEye+6ml4AJxmT2T/rWBLH0sC1TRjq3A+grIXB9ACMhUq8u+lhuxMA0q1VJieVObDgu+r9ZLnrAd0Dhjoh8VVGjsXlr3rx9pMdAPraqrxAWLBpUzsg/dRuAKBF4LCLJDfJQ0Vt8ewHcGyR0ujhaZXEoIXHrQCpWqVZdyEfZn7S5XfV6wFQlvsqzSwzZHK4I57sYg9AOZ6enexYNmvFHE930QWg9tDvnvJhRY2YbA6f35n2JgCzihyP0qzi3GKbfFcATCFenibxRTkxt1o7ufQDqBEzu5DMm9v8YG1DHeqpMb8eQHS7z/5JlrHI5LTJZb8jdQSQuUF68DycWHRZ9eLULfYP6PCZPfmsidK0mRxF6giQgzDByHwVBEcMTUa9I0BJzKlAaEPqeW1IB+mnH0BVtw12upYSws8s8dS1dw+40uB2TDZdHMsGm+KR706tA8BioHzuqyTrcUzXJyd2PXAMk73S2rdgbHrwePe8HQA2lyPrA3OQHqyoZaRfE+/LAZtwssIvYcFIx3Zs7e0fbgKs5ieTNUH2CuNv/9AFYHaxjvb4mhYzUv3148LVgP0CorOVpgU4UpV3Rj/AMUxW3noV1d6jfThluTsAn/hEV/EvAAD//82KiUnLnOjpAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3760965879651762364</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 灿晟数码严选工作室</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>本命佛 适用华为mate70/60非凡大师手机壳硬壳新款高档无边框壳</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_2ac8c226636b89eb0e2224e54f823fd0_sx_529818_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtklEQVR42uyZwY20OhCEC3Hw0SE4E0gMjUGTGGTiEProA6Keqtm3oP0DGCNN7wn2u9iUq6s9+Na3HliBJFd0JHcgAWH9eaQ9CCh6F4+4WC5wBEBnQN8SQIYVQzziu2T6A8Jmme/2AHRaRdpRR261axGIm73iDKAnRh54HuBbj0ibMEkwY+3qX0V9GtAh22yIi03pXfYU1jqE7c/Z/DDwUyNnZM5J+66/f8zuo0AoYeVmoyHKxPpStdWDi6MhQAKwkYtN6AtSBdewWcf5SQBdNEc84pz2tKcKqfquqM8DcBkDccaU9qR/1MGdeUczQJCMN65xsb5k9qWCW5UzT+0Aci1PA4t8q7CQGFwP+5MAkLJi73pTokTuLfByuc8D4cxhKzLfpWfvfuL94sqTDQAYHVkMacauRR3B9WPNAEAdgbgC8a1cK3kM6DhHtgMEKnpZZx1ZAJmYx7LXowCpGpCtnTnM8yTXq+u1AMjlztaMXCbsSamnjre42AIg1+ps8J3ty+6jWODtWzQAnA4Rj0jlsKJBTDGHy+W0TwCS92Jlmsnzg75EHWJjwE86pzRCJTHlcsv/J7EWgEA5hHX+JtP5zV/8enUDQMEY1rjGhSx9UcipQ1jjgdwQIN+Sz86RZxIbPZrN17T4AECbTx28xTKlae/UqtwQoHV49FL4KkiB6KqCekOAxslwRNoLSJp5zzVIP+0AGsprZwNecEsQckCPt6m9eSCUinD4ut6lLzvC6p53TWoNAOeNJ4WwZJ9xZCC4tebPA+dlctwuwTBs3Ox1zbwNAH4vR6l6StKDNzWNPPcb748DfsOprZ7TjF49zi84+LuKpwCb58nsQ5AbyHjLD60AHhet98NXIStGtt4aAvwXEO2tNC0gkOq8E9oBzsvkkeS7qPee48PN5Z4AfOtbTdV/AQAA///t+4QOox/vYgAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3762745022785651072</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>适用华为mate60pro手机壳新款mate60全包可降解六字真言磨砂软壳</td>
+                            <td>95%-100%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/oxxtVBDN_m_b7c81a13806f81cb4d22219ab40c5fac_sx_1448694_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtklEQVR42uyZwa27PBDEx+Lgo0twJ7gxBERpDDpxCT76gJhPs46S/N9XAEbKvlPI7/BMlpnZBb/61Q3Lk+SGMZAHEAG/8YTT1XIjIOtaYHFkhiGA3wsw9ASQfsOIGUNeaB8c97Lw2R2Q2inigZq4V9cjEPYyhxXAQCT1w+2A1h+BZcKkhknVVfeno64G9JDtZQyPMsVnPqLf6uj3P8/mxcCrElcsXKPuu/7+J3aXAj77jXtJBUEiNuSqWz1ac/QD0BOuJD7KhCEjVnDze3Fc7wVsfucZzrDGIx6xQl393VHXA7ArBWHFFI+oL+qIMZz6aXoB7BTkFh5FfjHkCu51hCtTP4BU650GhkwJ72n9cNwJAOn3MgJY8hSZkSrML94qdz2g3wGOJ+bwzAMH0xPzi0+e7ABAopLYDMQVB0iM3vqndAMANQEtLpI81B4jHNfAfgBPRa/iiitLBiRi0IX5VoC6WtZc5nAoh6Emv3P7uF4PgFSO70cPCjk8kb7iYgeAncKVMTQRO2wU8/xzqy8HzC3OQOWwrEGsporw+CjtHYBoXqxMM1l+IPsDND6YdFA9QsUJZR4l4I4Aer5cTNnc9gfyC/fR6g6AXFMLOWQeskJOlV+cWDoC6Df90zKIlsSShdz1My3eANDNlzXzURaqp+XU9sXSEaAEMQbZ2mJbEE+/VwX1jgCNk14G4QqiZt52BvVPP4Bc95UOTRKapo2Yv6f27gGfK/wJhFWhNx+wniY/k1oHgJVTqtGjZzNOddzwZc3XA22ZbHu5ozWMTeoWzPoBbC+nGQdTXPEytQ3LPxvvywHbcNqnuGKQ8LajvU9xF2C3PLnYECQB8SxfAaMTwOJiGfg0a1bsxVL+eblwNdDegNAyrS1qPCnnndAP0JbJieQzy3vb+PClcncAfvWrruq/AAAA//+vLI5lymn2cwAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3698726224655417795</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>黑财神 适用华为mate70/60非凡大师手机壳硬壳防摔新款无边框壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_76f17f6459d47826c8184378121caa43_sx_694477_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACxElEQVR42uyYwW3zOhCEh9CBR5bATsTGBEuGGhM7YQl75EHQPAzlOM77CxAFmCfH+Q4hMzu7s/ie77nh8SSZeQQaMJQdSD4z61u7EVAAn9vnoQzco2d11YnuCSD9hlGf48od3DyZbebaGZAtkTbFPZJINVXXIbCFLSxBdwD06xsCgN/CEY6wYJZgNjjm/ynqaqCVno3haVNci4A6+n9q81qgHcfMJ1euZSASt3+s7mLAF248MIYjkHtEROIBZ85m6wYAkOBsxGwzWYYi2TbrXXAnoOJUR1gLIgvQronwFkwHQESqCEd4coksAysgVR8/pdcD4ImkfhGWwDKBzZmZzb1NrAMAUZUWMpewA3EoFXXECGfDjYDmcjRHudwS93j2Cy6B/QAAt5rMqdbUmCO3Ktv7MOIeACR/AOFpgwRDf5rx4y37LgC1WsPZdwE1NUjkHx3jcsDTb9R4oNIb9NSsqY543Ap4teYNM3WzNvRq7P1QdQ+AfrYxHJji0lyuupq4hLUfQP5QkyVzNpCFpQKJ5PNzVLsakIxbVnSaw4qcloo8DxnvfYBmIe1eas2IP9e0wfoBYoVns+KVC5TVmJVx3vNkB4Ayjv5se2DCBAVzZirn7OgGQKyJR1AS39tTAyfwcc3rAag9AFJpXKnpEYnZ5l/B3AD4ybyYbQLirmCuKZifgrkaaLeQyz3Cyj3u5/9C/eIj41wN+FKTSq8JRplXfdfLH9AP0MZF6KkVzLnLLg6f7fFnpu0eiK1BpFdtkgrybVz/NZDrgXPIaan3XNSQh9fM83cKuhR4LZMzF8xlijs86+ib6aEf4LVMbmsa6UGPrVv8yr4HoC2TnbkGkO+X/7vxvgGQW4Boe9oz8wIf80M3gHwOmFtrbulywdAT8Gpq7lyAxvalOu+EfoDXMhmOi/Twig/m/tZm58D3fE9X578AAAD///dg4V9y/xKgAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3737990108943614312</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>暴富保时捷适用华为mate系列非凡大师70/60RS创意防摔新款手机壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_bd28e85e8475aa22b32461e17beecaa8_sx_351482_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuElEQVR42uyYQY7rIBBEC3nBkiNwk3AxK3bki+GbcIResrBcX4UnmeTPAYylsBkpvA2e7qrqxvd8zwWPJ8mVq93DhqFsQPKsTr/ahYAC+NUQ5sAycIvtejVg6AkgfUYSEhduYPa7X23i0hmwWiJtjFskkWqqrkMghxzmoDcAur4gAPgc9rCHGZMKJuNvRZ0NtNazW3jYGJcioN78+n9vngu047jywYVLGYjE/EfqTgZ8YeaOW9gDuUVEJO5w5myybgAAqd5ww2QTWYaisuVKlceVgIqjOsJSEFmA9kyEV8F0AESyIuzhwTnKMSqgqt6frdcD4FmTV8HI1EawKTNXcy8R6wBAVKcFFcAGxKFUtPJwNlwIaCpHc5wxxjlu8fALzoH9AABzTZbYCoZ6lKr6XYh7AJC8LO1hgwqGnnAVuL/KvgtAVmvyDCoeyNTch8Z1AHj6TMWDI9M2uZBj3C8FPK3ZJuplCr3MSO9V3QPgs6fdwq7Wk8rligYs/QDSB7WeORvIwtKuycd7VDsf8PR7kIwtZShS2pbENDxeCWiphofKFcT2zCw9sY4AXZs0Y+EMzWpcKxTMegKAKnu4Y8QIDeYKi3B8/9QnA4hVX1b6sLVPDXCl1PmZzHsAUI8/97DFhRofkKRpr5BzBcCXClkzJhuBuGkwT1W5fOoHaK9Ix/jALW7H/4Kc32ecswFfavLHjLNFzbzyXU8+XnbSAdDiIoLC90K9o8rlVrt/ZNrugSiDaH4hKSaZ663F9V8BOR94hZznokaXGRP/pKDzgJ9lsj41yxg3HNskiR76AZ7LZFIidpiaXvFb9j0AbZnszDWARMKxlP/ceF8AWNsA0fa0x8z7nh/6AWia1qZmzX4HwoyhJ+BYJsMdC9DYfmydiH6An2UyJGILn+ODuc/e7Bz4nu/p6vwLAAD//2xoIKX/SjhZAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3703504779381702691</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>六字真言 华为mate70rs非凡大师手机壳60/40rs保时捷全包超薄硬壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/oxxtVBDN_m_0195ee73a778a29781b366ab74905cf1_sx_1468460_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACyElEQVR42uyYwa3jMAxER/CBR5WgTqzGjNiBG5M6UQk86mB4FmT+Jj+7BUQGoos//N+Fzmg4JL7ney54hCQrK08AUzuALEWqvdULAQ2Q6n9PbeKRhD30oMA0EkBKwQzEI+08wCJk1ZX7YEDVTPJIRyKRe+5hQKDEErdoNQD27wsCgJR4xjNuWE0wBYH1H0V9GvCrp3O865L2ZkCf/7+bnwX8BFbeuXNvE5FZ/rO6DwPSWHhijmc0XSMh80TQoKsOAwDIHZix6kq2qZlszXjjhisBVmakIu4NiQ3wMhGfghkASD33zDPeuSW2iVaSWI+bxgGE1moxxy2yLaA7M6uGp4kNACDZTYuVWzyANLVun3pG0OlCgLscNdBcbktHMk33wC1yHMBU3bMG0gRDK6rPCL+NeAQAWU5/riYYCsWUfXvKfgjAWq1mbpgsHlhTC28eNwAglMLiP75lWiSy5z7jding2ZpJq8xDb+35t6pHAKQI1frxkjZzudKDA/tAQPKrlzXoRDa2DlhMvz8v3wCANHl03mA5rLnTWhK7mfFeBkDC37qsNSN5mWe8vxrK5wFp3QMkz7hzg81qrD3r+gqcIwAmGFJvWLDABnNfJQQeGAawJMYSbRI//FMDrDR3XnUcAP3xuPn2wMYHZFZdn4K5AiCt+8yLVRcgHTaY5265fB0H8CpcMHH3LQjQPfG8mvPnAbt6Qg3qn9rGh8xTyPuznQwAeFy0aTHYYM4jdcgpVW9vmXZ4IFmD8LtpVkxat/C4/jKQzwOPkONT72NRQzeQ9Z9FzUeBn2WyDWN7W9IBMWd208M4wN9l8qpLMj2wsEjB+pL9CIAvk4MGB0hkG8NIfd94XwCoLPF87GmTGbGNbb/ywyiA+ZwNlNaa5ZQSN0wjAY9lMsJjAZr8pXXeBeMAP8tkBG6mh5/xQcP73Rwc+J7vGer8CQAA///eAfpy1eJxLgAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3716358778845790694</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 蛋壳数码3a</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>钛合金裸感适用苹果17手机壳17ProMax/17pro磁吸iPhone17pro防摔</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_9d4ad71b6b10f0d882c5e75b75903f4a_sx_530782_www1600-1600" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvklEQVR42uyZwa3zIBCEx+LAkRLoBBqzDFEaw51QAkcOFvNr13lJfqUAEyl7ip3v8CDL7AwPv/rVF5YlyZ17W1qqK0wl+9IXedu+CKiA3dvC4bInWUkOuzfAzASQdpc/2WWYenh57EtLvE8GFLdzAJ7V0BYEu08I7PrZ1NXDd/T4uczpAcAWJ7/FnXdpmGI/O+pqQI9eC+7WVn+vh7elB+mg/8/mtcBZriAxI1XIRsf+oXXXArbqOgY2iIhJsSBgc08Rux7QLg2uYHN3Hp7VErEHN5C+CLDVFg5EZhhmkIgsiG1z96kAIjiKIFRT9dU548xMQAfZZNTKvACgPe3yq6tnAFge/UAeHh7grv3wmrzzA/A9qqQlHgAOdPSlR46/hpkCgJ40kZDVHzh8j3bY4d6l+HJAutoOBCx86EOxew/Amz5cD9CWHsXR6labyqLK/KdxcwDiYWT2prZi9SJiVjSN/5mc6QHKNGZxt2Z4QMylfN3Sy2BMANTT6LTNHWJ7SXbpnuFmAmQVwe0NKmIaxGKHu706agKgIurkla2+07DrY3tOjG8B0Bc5jDqajRp1y7a9W/frAZE1ceaqcYaImieG9M8sgFSHGy6rN5dg3oMdcwH2lLCFbCsSZcY9pPgZxK4H5A0ePttnaBCLPeAcH98D2CKjWeVDADU5ki6fy7wesJQ3LbgsguBZJfJYmRd/+jAF8MiPSUyObLUGMcC9Td7rAf16YdbDx3pmHN7erhe+A+BpGVYFSAQN88/f4npAa2kBm8s+a8bRhaX3a5qrgcdtkmw1/xoGeruYJwLOy2RxNanKVusVaMH2yrwzAHrDGcUPaKRl4S4T4+Vhvgbg/rBeRowZuzykNhcgR+/GLAkHiDJA3q+8ZgBkrOnHVKFd3XEq80TA+b+koXnhDA9Y+HE2Jwd+9aup6l8AAAD//6P/0nP7Yx3dAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3778884150552035614</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>笑脸锈迹斑斑适用华为mate60rs非凡大师70RS手机壳40RS无边框防摔</td>
+                            <td>85%-90%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_e07043c6bb967aa455d772056dfa656b_sx_688084_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACxUlEQVR42uyYwZGrMBBEW8VBR4WgTFBilMFFYiIThTBHHSj6Vwvv2vs3AETV6ojfRXLP9PTg7/ydGx5PkhsPzAYMZQeSz37TV7sRUAC/mTOEtQzco2d11YnuCSB9RjKEPa7cwezJzWaunQGbjYHc4x5JpJqq6xDIIYcl6A6Afr4hAPgcjnCEBbMEk+G4/aeoq4FWejaGp01xLQLq+Ls2rwXacdz45EoVHxLzr1Z3MeALMw+M4Wi6RkTiAWfOZusGQCSrsxGzzWQZimSr1hsW3AgAcKojrAWRBWjXRPgQzOVAVEPgEZ5cIsvACkjVx1fp9QB41uQlmCWwTGDrzNzMfTexDgBEVVrYuIQdiEOpeuoRzoYbAa3L0RwPTHGJezz9gktgPwDA3GptCYuMOTJTjvEp+g4ANMHobSUYesJV4PEt+y4AWa2NgHwXkKmlOn62sOsBT5+p8UClN7A1XjnG41bAy5qzPA+Ahl5mpE9V9wD47GmJR9jjoi6Xq6sC1n4A9YeaLJmzgSwsFUgkn5+j2vWAz/4IamNrGUrrtJL5Q433NgAivu4la0Zs19z4fBvK9YA/XUwTxMoFymrcarL5PXB2ACjxjoH2wIQJCuZtmeD48V9cDSC+Uo5CmJ4a4NYU8T2ZdwDoyC0ebXug+CA92GzDjQAJxh/hwGwTEHcF81Q1l8/9AIBqzZLiQ9uCANWRmnnQDeBLTf4cGPeozKvpwZPPbzvpAGjjIvTUCubc45lx7PFjpu0eiKdBvFoxySyvJt8NpAPgawdyhOVc1JCHz5h/LWouBF7L5HzGybgrX+qp53ev7gB4LZNJm6L0oHFRt3jLvgegLZOduQaQSIphpP3ceN8A2FqAaHtaZV60a87dATRnwNys2R8+hwVDT8C5TIY7F6CxfZTzTugHeC2T4bhID6/4YO5nbXYO/J2/09X5FwAA//8FBhLfr2kTDQAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3766270898844336475</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>适用保时捷华为mate60RS/70por创意手机壳防摔华为mate70rs配件</td>
+                            <td>35%-40%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/rbpeqWBe_m_89a717ccc8b058108d3c89e71a8f926f_sx_384255_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtUlEQVR42uyZP+67OhDEB1G49BF8E3wxBERczNzER3DpAnmedp2XP/r+ehYprgL6pICMZ2cc/NZv3XA5kjx4cPN7njFmsk7ukLvlRkAG3FEGNsyBZCbZMBRgtASQ7mDzm98w5jPo5VFW7saA5BUJzCNdwuQsAod+HvMcECpqrMPtAMAlzwK/cxfBJNf0G6MhQLdemfyjzGHPZ3DpX3vzWqAvn7Byw5ohLzrWP153LeCyPkfDgjXPeosJExb/MrHrAQS59gmL33kGZkfEOvmG9UaAyy6RJXLDyA0kIhNiWfxuCiAGUgwhj1lviRUPZbQEAHJNynMIoJr221vVFgCm2vVAngEBqIPq4T157QMINYpgysATwAmdF5Htf8GYAOTlTxgoVnziDDVics1/WvHlgKjaNVGIvmpml/Qb+PCH6wG6VGMRQ9g0IjCxYXp5nA1AMoxEb/LUVIvoGiL5FXLMA5RpzISBO09Q8yRiWd8BwwCQe9Apiz9lwpGUuMjmDQHqWpM/ClTVWsRihX+8dqYFAE8BPMrInSPFwPA1MW4AaKaRMtlH86hB3R1leSdzE4B03sk/1ONGIqqCmujHCtBHrZRJzebspwfNmwIcn+7AMmOlyEOD+vpKYgaArgi9g7BBi5gMtZUn7gQwifuqfQhQexJ7vB/zesCxdsGIZBCYK+rkJKi//MECIM/hJebIUDuDtAkJOf5j8l4PsL9oqQ8rqQWCBx8fxwv3ALQ/Dro39XQxuc6bAXQNZcKCOWzScaI7mN550gLwPE2CWrEKJukA+VC1AaAfJkPMOMurdjIvEpbPUnw9oCeceqahlZZJU3h7ZZj7AM9fQ0qQDA+X5KcptoAkcZGbNBxJj0nygy1A8qF+XDPUiiukTn6feF8M9P+SmvaFXh4w8M/eNA781m+ZWv8FAAD//yguvbsk5MR/AAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3721163773600464918</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>轻奢适用于保时捷华为mate60por/50新款手机壳华为mate70rs配件</td>
+                            <td>10%-15%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/rbpeqWBe_m_d202e2c0e0ee86a9785efb6fb1fb105c_sx_443657_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuklEQVR42uyZwXH0KhCEW6UDR0IgE5GYymhrE0OZEAJHDir1qx78vOvfAQhVLT5Z+11AzUz3CJ/1WTdcjiQzgFRXIAAuM7tdT+uNgKJn/sRUU4EhAKYKzCMBpMtY/Im5JNo/E/ea+BwOiHUiC8KBFrm3aUTA7/XLbwBmItLO/WYA4PYKz7rCdB3b1P5V1NWALtleF/+oa3iWI7jclj9382Lge0VuSNyCzl1/f4rdpYArLnOvscIfQJhL01EvJo5xAOpJjXzUFXNBaFClrRO3WwEuO/L0p9/CEY7QIFW/K+p6AIG5LYDfsIYj6Ie2qDLr1YwCfO8i+0dVv5hLA/e2YFIjHgVQ1cL/JzsXFhKL6eG4EwDS7d3mlDWwINom06vKXQ/oPWDiicRnmTkXl+0uvvvJAQBEqvOmirDh0KZOZ/qpwwBAi4Df+eCT5CF5ABM3z3EAVVrKHjz4LICKGPTg61aAVG2tWWVtpnbN7PKr640AqMrJ5ACeZcUR5HpafLOLIwBFV68uvhexw6KY49u7GADo8dCfnvJhRUGsxSZ5/FTaWwDMWHQZrTWrOavKcTAAkbakEcqJyZfXxG0cwMnl9i4mb27zg73FOv3U6iEAxG5yyDIXmZy22DghDQRQyas3iO7Eostu5/ZKizcAdPjMnnzURGlandp+SAMBchAmGJmvguDo9iajPhCgOOlOm3EhKPP2PUg/4wCqD236Hr1sijxswIKv99Q+POBKg1OY7HfzUPvQeiW1AYA+8aT5yZIs47SJGW+t+XqgD5P7XO5bMG43u3hgHMDmcjzx5Y8gPbRouSz9mnhfDtiEk/3qYVbhtYTLn13cBdjNTyYLQZYuf/mHQQCzi3VW6i3NHCRS/fVx4WrAvoDobKVpAY5U510xDtCHybKMz6Le2+PDW5W7A/BZnzXU+i8AAP//96rBU1dOHsoAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3713022063909405132</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>保时捷高级适用于华为mate/70大师手机壳mate/华为mate70rs配件</td>
+                            <td>-0%--5%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_930ab4e39cf3326ff9922a0057368e88_sx_438544_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvUlEQVR42uyYwW3rMBBEh9CBR5bATqTGBFOGGqM6YQl75EHQfAylOE5+AaaA8BLAfjmQnp2dXfydv3PD40lyI+0BYCg7MPkDTp/ajYAC+M0cF6QycI+e1VVnwNATQPqMMSxhjyt3MOsWlrh2Bmw2BnKPeyQx1an2COSQwxJ0B0Bf3xAAfA5HOMKCJMFkOG6/FPVpoJWejeFpc1yLgDr67XdtfhZox3HjkyvXMhAT839W92HAF2YeGMPRdI2IiSo9Z8m6ARDrBGcjkiWyDEWy5UbJ40YAfGYONIS1ILIA7ZoIL8F0AESyIhzhySWyDKyAVH18lV4PgCemq1+wzGBzZqrLrf0AiK3SHJewA3EoFXXECGfDjYDmcoo5crkl7lGaruLZDwAwt1prgqEuxZbEvo24B6DlQ8gfJBj604wfL9l3AajV2gic8UBNDf7NwnoAPN9MbGCzC4n2cSvgas1ZPQ9AC71bnd5V3QPgs6epH89xkcvlCghYOwL0tpNN5mwgC0v7mnyS/QC++OyPQDWIMhQ5LbP0IOO9EdBSDU+XK4jtmnLmt+j+aQBoIdzxCCsXaFbjVidLrzzZAeB53sIemDFDg7nCIhy/nroDoEVxpRoNYXpqgBvlzq9k3gEgjU4GqTSuFK//sPSmh/4BX1qTO5BsBuKuwXyqyuWpHwA4bc0eas1xP38Lcvluzp8HfKmTP4tvj+q9uoMnn6920gHQ4qL+JA3m3KNe3m/2+JFpuwdiaxBtfIgagTRNtLj+MpAOgDPkHOFQ6RW5nBeUfi1qPgpcy+TcVslz3OXNo2+mh36Aa5lsyeYoPTA3Pn3LvgegLZPdWXokv65mPzfeNwA25nBcQ5AM5BzcugNozoDUWrOmy7Bg6Ak4l8lw5wI0tg/VeWf0A1zLZNmY9HCND+Z+1mbnwN/5O12dfwEAAP//91Dt4XcXvCgAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3726004867387490344</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 守护者数码</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>风景适用华为Mate70RS手机壳50RS/60Pro+/60Rs全包硬壳70Pro+防摔</td>
+                            <td>200%-500%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_b32d5b9541b6b12794eac328f08dc0cc_sx_475268_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwklEQVR42uyYQQ7jIAxFP8qCJUfgJuFiUUmVi5GbcAQvWSD+yCTttDMHCJHqXdHbuLH/t41f/OKGYUlyJyWyYsoVCLY/kHIjIAN2FyNwW55YvWXRB2AaCSBtwuxWwG+sYNIsJHIbDNglkLL46kmEMsMMCCSX3Oo0B6CEYsr9AMAm11xzK6IWTILhvxV1NdBbT2b3lMVvWYEy2/9681qgh+HOJzdq8yEw/Sd1FwM2M7Fhds2R1cMjsMGIkSjDAPBkMTIjSiTzlLVsuVPL40YAgO4XKsXwzEBPE+6jYC4H1CD0Szy5euaJBdCqbq/WGwGwLOHwC8e8gF2ZuYt5i9gAAHzvNMPmKuCnXPSvVseYbgR0ldNoWPzqqy9By5yr4zgAwFSC6MuqxuyZ1Jo/hXgEAME2l/DApAVDqwXTf8pAgFqtBJ7jgZpaKPOnhF0PWNrE5HjOtF14Z8x43Ao4rTmdRaxDb18eVvc9P1wM2GQpQfXBr13liin90wwE+N56QYxMZGYuQCD5fDffCIBm0RzVIPKUu9JqmT9UeG8DWOKVl1ozfE9z5/OvX1wP6OBlNYfmNq7QXY17gQ5m4wD22HgpDyxYoIs5VYoNK4YBdBJjcrqJ1/5X9+lRKyLKOID6xQzg4arfqOuD1oNEmW4E9J23uYYoC+CrLuah6FwexwGAQ9bkodbsqweK6X7xNufrAZt76wXpf7WuD6HoDPl8f4kBgD4uwjUYXcxZfVHp3eXxNdMOD3g1CPeSYlK3iT6uvwVkAOC8gUjkehxqqIqC+O+h5krgPCbvXBHz4qvul7PtoodxgNcxWaVY64HJJpvwV4iHAPox2YiRxW8kEY7U5PvifQNgZ3LtXIJKKEYL5uNoNgpAMQLEbs222eRWTCMBxzEZ5jiA+v6ozrtgHOA8JsOoPvC1Poj57s3BgV/8Yqj4EwAA//99uAZnfVb8SQAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3763092882815320227</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>华为无边框手机壳适用Mate60rs/70pro防摔硬壳轻薄商务50rs抗指纹</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_7ad08840c3e6a9bc4f98623b0b24ef44_sx_594523_www800-800" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwklEQVR42uyYwa2kMBBEy+Lgo0NwJjgxNDAiMZOJQ+ijD4halZk/f2c3AIw0vnz90bvYdFdVN77ne254PElu3HiEBUPZgeT1L0m7EVAAv5kzBJaBe/Ss+gEYegJIn5G4hD2u3MHsyc1mrp0Bm42BNsU9kkh1hOsQyCGHJegOQE3V1fsBgM/hCKrqWQWT4fhvRV0NtNazMTxtimsRUEf/X29eC7TjuPHJlWsZiMT8n9RdDPjCzANjOAK5R0QkHnDmbLZuAAAJI0bMNpNlKCrbl/DeCfBZ9mAIa0FkAdo1Ed4F0wEgg3A8wpNLlGNUQFV9/LReD4AnklfBLIFlApsyczP3FrEOAER1WthkakAcStVTyzGGGwFN5WiOB6a4xD3WRH2cJbAfAGDWb2wFQ11KVf23EPcAtIIBHphVMPSnGD/eZd8FIKu1JKtVPJCpuTr+pXEdAJ4+M4czdg96alY5xuNWwMuacyB1sxZ6zwz8mR8uBnz2NFnzHpemctVVAWtHQHtbS+ZsIAtLBc5OZE+Apz+CZGwtQ2lKmzHiIeG9DeALEt4qVxDbNY/wtN/o3gFQpXJKECsXaFbjVqFg1hPQOo32wIQJGswVFuH4furrAchqc9AkvrenBrhR6vyTzHsA5BejTK1tDzQ+IHGz2YYbAW3mPcKB2SYg7hrMU1Uun/sBAPWaJXuElXvcI1AdyeXXnK8HWutpNIeeWuNDqqMnn+8v0QHQ4qL+zBrMuUvE4Dd7fGTa7oEogwg/Ukwy+6PF9V8BuR44Q85xtl5pKqeYM/+zqLkUeC2Tc1iUzOPe5MI30UM/wM8yebYpqh74usVv2fcAtGWynltKSyKdV7PPjfcNgK0NEG1PGyXE7ZpzdwDNGTA3a9Z0qZGnJ+BcJsOdC9CIU8Sax3UDvJbJcFxUD6/xwdxnb3YOfM/3dHX+BAAA//9/Rsyou2hU4wAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3753370882857369696</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>保时捷适用华为matex5/x6手机壳典藏版荣耀MagicV3防摔翻盖折叠屏</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_5f0fb211c7c79744faa951c0f3d780f2_sx_1413159_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwElEQVR42uyYwa37LBDEB/nAkRLoxDRmxURuDHdCCRw5IM+nwXnvJf+vAGMpe3R+F8gyM7v41rduWJYkdx7ucA1TbkCwezX6Wm4EZMDuxTBiyhObt6ymmgJMIwGkTQgFrvmNDUz2gCkrt8GAvQSSzTdPItR5SCC55KLTGYAa+lXfDQBscurqiFUNk2C4/9NRVwP96ZXZPcvityygznb/921eC/Qy3Pnkxi1PRGD6n9RdDNjMxAOzO5z6Gh6BenqmrGUYACCrKTPWspJ5ymrbLr0RdwIqmBwL3JbhmYF+TLjfhhkA8GSFO9yT0TNPrIC6+vh5eiMAlgg2YXbRMS9gV2bK5bZxAHi9NKcGaICfckWdIceYbgR0lVNJ5aJv/vQLRsdxAICpho5EGbNnkjW/C/EIAII9AOmDGoZWDZPw+G37IQBZbZmBMx7I1Eyd/yRsBMDSJioeRNctTXKhLPa4FfCy5oSVOplCL/ca3rt6BMAmyyJrbj5K5VIFBGzjANKHGkoopkxkZu4/k8/3qHY1AG9pD0cZRJ6ylJYJMx4S3tsA9kw1OpesGb4fM7lneYvulwOsPdXwcBsjNKtxr130BgJyf3osDyxYoMFcYRGGb1d9NYDzy140hOmqAcov/pL5CID8YgbUpX6jxgcE8WW6EfAz82ItC+CbBvNQlcvXcQCND5K18pA1+3b+F2R8n3GuBmyuwVLTI5uX99bAwyo9Yhygx0XoqjWYs/kql9vL4yPTDg/4bhDnTkwjkAb5Htd/BWQA4Aw5h1MyPxc19rDKPJ8p6FLgtUze+2C++CYDCafoYRzgXCajr2nUD0w26RR/bT8C0JfJppgOkAg4l/KfG+8bAHsfIM4hSELcj7kOB0jngLVbs3KPi5hGAl6mZs4FqO8f5bwLxgFey2QY6QN/xodiPt/m4MC3vjVU/RcAAP//I7kV7xrTFggAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3743237442380104069</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>保时捷适用华为Matex5/x6手机壳x3典藏版荣耀高级防摔折叠屏硬壳</td>
+                            <td>100%-200%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_36dc1fb9cc4702e82428f6d6cf41f3f4_sx_1415858_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtUlEQVR42uyZwY3zOgyER/BBR5WgTqzGjNiBG5M6UQk86mB4HkjvS5z8BVgGolOg/RbYCMMhh4vf+Z0bHk+SOexhBzDUDUg++6K3ciOgAj6Hwie3uIAVIFkEGHoCSF9YuIcFc0X0ZGlOZq69AZJImeIWSaQ2ok/AiRNg5kBme+q7AYAv9nmKq8mljf5bUVcDtD96DE9RYIs+K/BVmxcDdtz/n6PWYRt9/rK6iwHVA3PIZmHAhgZfmiO59AMATWttxCwzWRVq6c8u7gP4yuwPweAQDJuqaD9ZcQeAKgTALBMGsiI1x11Fjn4AtuQzxrAE1gn8ax/iXibWBQA0c1k114qoIvc5nAzkBgDQwCJJHBf8Pf+IMZxrswOAuSVJXMKijTkyc4c7G/H1gLkctfNSge1oIbvqR/oBiIRkU62qYQMJa2oy9wT4TNXoEtY66FOzJe54vOPDHYDK3AA1tpUr9cctNSePs1dfDhDJbA1hwRQH6kVDOLTTCaC1pqUnTrRbsDYgkXy+iq8HQKcByqjTQFyi6WH0+T093ALw9GwaHo7WrJlXhzXumHoCrNIOVS/QrMbSbDCTbgAbxZ1oF7Nj46Kq+t1Qrgd8bWBG4lOzFze05HdPOZnY9YCOB5ZxHmGLKxGtfRSZZZA7Acw65HAP5GqJSMMDXvNkD4BmXuj0sGOuh11g/JwnOwBqS97GHG5Re6/mMk/TT0eABvNXxLX4oCJfzjuQGwDU7JhsmzRwqOrNehXWfoBjB8Jii7tjUeMLM+bPRc21wLFMBiyY60MDLOYPHyvxiwHby5khbFZ8PttvPDBLR4BtOPW51WmpacJZ7BnuBzh7/JlDZdZZLDz/WeR2AJD2LbQ1M5vtTegIsP+AWBezIGaXxabHfgBbJpvT2go06pdq5+3BHYDf+Z2uzn8BAAD//5ghR9F1p3WUAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3751039572461617349</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>日落金山适用华为Mate70rs/60RS非凡大师手机壳全包轻薄40RS防摔</td>
+                            <td>85%-90%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_981e8c33aecbb8f22c49be2916b663bf_sx_386542_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuElEQVR42uyZwXG1OhSDxbDw0iW4E9wYc80dGoNOXIKXXjDWGx3+JOSlAMzMdVaBbxGMOJIcfNZnPXA5ktwATy5AANzG5nZdLQ8Csq55lqGkDEMwcC/A2BNAug0TXp450X4RkLh2CAxkRjhQIzcMPQJ+Ly+/ABiJyPZAAHB7gWeZMUswsQ51+J+i7gb0ke1l8u8yhzUfwW11+vNt3gz8W5ELEpegfdfPn2F3K+Cy27iXWOAPIIy5aqsnE0dHAIkJke8yY8wIFdzcXgYuTwK0+Tubb34JRzhChVR9VdT9ACRjvYkFcziCbtQJk296Nb0AjtpZbv5dxpw45grudcJQ5n4ATS15Bd+aW5kavM30cDwJAKnHRCopz4EZscL84nvK3Q/oXUD28PJrHjnaPDG/+MmTHQCI3DzZMIcFB2yrTT+lGwCoEfASwErykDxiHbh49gM41si9DAIyoCGmWFZejwKkarNmjbWRempqniw/5nw/IL9QyFHLyTOOoNRT4yUudgAA9ulNtrNjPqyKOf7a6tsBR00I39QWNcKCNrsOfPPb1J4AZPNiZZrZ8oPeRJ18Z4ApWpkmcaWSmNutTi4dAWeqGexKop0f7GZrl45zO5ARz5BD5jEr5NTJbb4hdQSQm/5oGcSZxKKF3OXSFvsHtPkmmHdJlKbl1HYjdQQoQUgwFr4ygqME45eeANVJ1wxAUOelNV7ppx9ArlsHSsQ2EoQ0THhdW3v3gMsVrvntDL35gGma/GlqHQC2zo6TcrKOY0d3F+++HzgPk/1mxfxLMG4vr0vnvR+wczl+1QczNek6/Trxvh2wE84G6Ckw0rGej3bJD88AdsuTyUqQ4qWF3qUzwOJiGbmaNf9zi7F0BJz/AaFlWjuocaScd0Y/wHmYHEmuWd571ge2X99m78BnfVZX678AAAD//3ySyHIcl2RdAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3761977569935753616</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 TUTUMADE</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>磁吸适用华为mate70rs手机壳无边框60rs磨砂mate40/50rs防摔硬壳</td>
+                            <td>90%-95%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_99baf4c78b5f6f4cc2446ed3a6746cf3_sx_271440_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuUlEQVR42uyZQY7zKhCEy/KCJUfgJuZiVnCUi5mbcASWLCzXUzV5k8w/BwiW0tEswnwLG5ruqg6+8Y0LhiPJHfAnViAAbufuslbrhYCiNU/e61xgCCbmCswjAaTbEesNqSTal6lNNfExIDCRBeFAi8xjAj7Xm98AzETkiesBgMsVnnXteR2bzuJ3Rn0a0CXLdfH3uoZHOYLb2/Lnbn4YeEbkhsQtaN/1+VPsPgq44nbmGiv8AYS5NG31YskxEIDYYo281xVzQWhQpa0TtysBbHCn12cLRzhCg7L6PaM+D+ixm05iwxqOoH+0BYs/dTSjAI7c9efV1BLn0sDcFkx1HQdQ1cJUo+3sXKjCe1o+HFcCQLpcF6SayhpYELlbv/ipcp8HdA6Y6oKJjzJzLm5/9ouXnhwAsMdWu13DhkMvdQLKnzoMALQIeNOHJA+lR2Tm5jkO4CjpVaeuxKAiBl2826UAZTW0dus6DC263PDqeiMAjtaaF8CzrDiCI0/EN7k4AlBIXT3fi9hhVszx7SyGAKxbnJ7SYUVGTDKH9/8r7TUAVTnVuN6a1ZxbbIsfCvhR51SOUHLCZZ5SwOMArrQoM1mTaXObH8hOTj+1egjA3OLu72SZi0ROW9zuT6SBAGpF+eDZlVh0u8vcXm7xAoA2n6cNahKV09apFWkgQApi8bkmia+C4PjsFwMBspNODUIvJM9r5QLKn3EAmfI2PUcvGxC6x7FGfB3AFdlJADf/KHM5oE5N8uXUBgAsZHHt6pnHacrrNyX2eaAPk/tcricMXaa+HhgHsLlc39uw4Tni2JF+Tbw/Dli/YIXeAjMd+4DjJXKuAmTTk8lMkNxli/VNPwwCmFyss1xvaUryHekf/fBh4PkLiGlaG9Q4yk5ixThAHyZHko+i3tvtA89fd3N04BvfGCr+CwAA//8wg7fOX1/y/gAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3768870492291858913</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>雪峰适用华为mate70rs手机壳60pro无边框轻薄40rs/50rs防摔硬壳</td>
+                            <td>40%-45%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/jpeg_m_583a224972912e9ff77a470d02fce862_sx_300757_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACu0lEQVR42uyYzbG8KhTE23LBkhDIRBKzRqdMDDMhBJYsLPpVn/n83xeAWDWs7tXfYsCmT5+D3/qtCy5Hkjubb/7AmA8guoZBT8uFgAy43f4e88gjONbHg7EngHQJE+DXsPEAk2tuLwu3zoC9TJ48whFIxBrr0CGQfPKr1x4Avb4gALjkpeoViwSTMPCvos4G7OqVyd/LHLYsoE5u/3s3zwVsDdx558Ytj0Rk+p/VnQy4zMSGyTfTNQIiG4YylKV0AwBkBSYsZSHzmCVbs94VlwISm2eB3zICM2DbhH8LpgMgIFb45u9cA/NoW3I72+vq9QA4Wqmd/OqZZ9CcmXsZ3ibWAYCgm+Z3rv4Awpgr6oQJQxkvBJjLKeawzGENR5Cm68DVsx9Aqq6R1F1TYQ5MVbb3ZcQ9ABKMb7hhlGAoBVXo39IRoFJbIu+k4oEVNYn8q2KcDji6xGQmJndAIE20t0sB79Jsm4SF3oT4reoeAJccS2TzR1jlclK1gK0jQGcbSyxDGcnMbK8p/fQDODpa5R2Uw7KclpL5TcZ7GeBhIbYvlWaE1zbLWLoBnH629tD8xhXq1bhXC2YdAbSmhuWGGTPUmFuFG/j5FqcD0JPk1YkfdtQAd1PEK5n3AMBiN3DzR9io9IjIvSwfwVwAePW8WMoMhEONuVIwP4o6H7BdyOVufrMpiH0Lcv0U5/MBl2uUkAt01GofYlWGvL/LSQeAxUV4he+N2kdVldvL7Z9M2z0QngViMCsmmepkcf1tIB0Aj5BDyw+PQY1rLmH5M6g5FXgOk9WIMc/hwGOaJNNDP8BrmCwrlh6MT1g+su8BsGGyjlsA+Tx5ln8n3hcAdibfHnPaIAMBvgNGNwDLoO9hpdmxwq8YewKeRW14DECDPVTlndEP8BwmQya28dU+fEe1CwC/9Vtdrf8CAAD//+NI7vaXc/VXAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3772021958988923008</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>扬帆起帆适用华为mate60rs手机壳70pro无边框山水40/50保时捷硬壳</td>
+                            <td>20%-25%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_5e1115a01d8bf1a5bbdae286b2b81294_sx_1850296_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtElEQVR42uyZQY7jLBSEy2LBkiNwE3OxKHbki+GbcASWLCzqVz3PdPyrZx8shZWb/iIFXLxXRfAd33HD4UlyZw6v6soDrpANftdsvRFQAL/XqT6BSLLoX22qgBsJIO1Lr9Aajkj67Pe6cBsMyCGHrlUUR5+ROCKw27Mrj4jY0FKbbgcAPgdWhI2bBJN9t0+4gQA7enUOr/qIWzmiz23+fTY/C5wjZCxcsRRoo1P7Ves+C/hi6+h4YikPm2LGjGf4KWKfB+zvxIxn2HhEFk+kNoeO5UaAL8zca+IKxxWk0ak+wzYSgIREqiAUV2xqpxqIGwoAWSfrGAaYpsP6VvUIAHObg/RAHhER4G56eHfe8QHEpjcxVYQDwAHrF4n9r2CGALT5s0nmEQ8csSWffQ/XUvxxQFXO95AhyVh9yJjaDLzrwwAAfW6pIrA+zCKoXPBS44YA5GFkvQU8ooqY79r5/5mc4QGqG1t8WHhA5lL6qcvbYAwAlNPo1KeOXrTwMGNiDyMBZ6PdJRke0YJYagivt6IGALQKCeBVHTc6qoDh0jFuA2jrcbZmZ0bdsz6v1n0EQAYyvKzGOSJpWaFb+xgEUKtVow2reXMFc4sPQwH+9IeTFbGF6nFm1JcfJzYAoJlTDxVxhQUxtWJVtDsBCrmYrXwIaGhTU7p0dRjAUzPsJhlEloY2exn1v/VhCEDrMJOzUU7M0+8yOeHSeT8PWMTVOnT4aAGCO1+X64V7AMyBVd5sOW8Xu4X5n3fxecDGVJNdga7KOInd57efHAH4c5ukVstTMNLOflX1AMCfy2QJoGirfcbsM57XUPx5wG447U7DIi3J7Gkavhugt2EzrsCcmM5hHQvIsotclXCAM/P2sQD5Q3tcCqwUN0CddxsIOH9L6pYXzvDwr7M5OPAd3zHU+C8AAP//JIrFq7imn7QAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3737027679745081469</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>泛舟湖上适用华为mate70rs非凡大师手机壳无边框70pro60/40rs硬壳</td>
+                            <td>5%-10%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_32f403fbbbe1985fb55924a61d3fa315_sx_1544612_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACtElEQVR42uyZQc7jKhCEy2LBkiNwE3OxKHbki+GbcASWLCzqqZuXxJr/AG5L6dUIfYvBaaqq+8evfnXD8iS5c69TXcoDrpBtxiSn9UZAAfxeEXo4IslCsssBnCWA9DvJNRxwRSAvl1q4GQNyyKEDkcXRZ8zeIrDrv115RMSGltp0OwDwObAibNykYbL/21FXA/r06hxe9RG3ckSf26wdRDvAqJCxcMVSIB86tT9ady3gi96j4wkRMSlmzHiGj4hdD0g3IDHjGTYekcUTqc2hY7kR4EsD95q4wnEFqXSqz7BZAuS/TYogFFf0aHicswRAbiFWu0IB7emwfrvaAsDcZkDamEdEFF774eu89gHEllTnFh4ADjSQLbG/G8YEIB9/RqJI8YEjtuS77+EsxZcD0tW+hx7Wtz5kT/32iyGAPrdUJ3aMiMCsUvzVOAuAZBgy68kjioj5rhZyDjnmAYobM4cXyQMceVJEj4aAokFHrPkhsZfy8NrEHgwBiGq0MuWIiOkglhrC6/MyDQC+SAOoPjhudCpgODnGLQC5JuRlDmt2GtS9/DSumgHG+IA5vFTjHJFGB4UDZgCZvDCLFGs2p24PVJsNAZrDNOTUBxaKx2lQXz5JzAAgJ8DI2XGFDmJixSMt3AfQJp5VPgRoaFOT6dJVM4CnnFAThG5BGtjVL94CYgKQ+TF0TNwoScwTk4SccHLe6wHNNGN8WMjhcTtfp/XCPQDmsFcJOYtuF9tYjHx+i+sBranOEhfiKjNOYvb5myctAP9vk6YKuHfDQLeLqyFgLJMnvupS5FN7YvYZz/NQfD2gG85Un3KLqIExq/OutwMoeXLVIQiJ3Wdx6moLyBIXucqEAyQxkPPKywKgSUxqKdCultSDfzbeFwPjb0ld54UxPGDin7dpHPjVr0zVfwEAAP//o5+rTZQrQhcAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3751180413146628568</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>西藏神山朝圣适用华为mate70rs手机壳60rs无边框60pro风景50rs壳</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_f840afde4fd5498075230fab78ca86e8_sx_1062098_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACuUlEQVR42uyZwY3zIBSEx/KBIyXQCTRmxY7SGHRCCRw5WJ5fA9kk+28BxlJY7WGT77Dgx7yZZ3zXd11wGZKM8FgLAAeYyGiSPi0XArI+s4e9k7kjAKYCzCMBpIkIPOwjr2x/TExl5WM4wGPSLtyOGhgxjQjYVG52AzBTG7ogAJhUYFkWLCqYUKf6f0WdDeiSpeLtvSzukXdnYvV/7ubJwHMFbli5OZ27fv6I3amAySYylVBgd8DNueqofSuOcQAiwCPwXhbMGa5CSlsmbpcCKkziYQ+7ud3trkJV/VlR5wP6t6sH7IbF7U5fVA9vDz2aUQBDRv3ae5nzyjlXMFWPqSzjAFIt/JzsnCnhPVo97FcCQJpEKcaaF8f86hcvlTsf0HPAVNSaH3nmnE189ou3nxwAQGC0LDcsbsOOLsaqnzIMANQA2MTNPkjurmnaxM1yHMCwBqYylanMGZCIwRtZmisBqmoAHjcs8mGoQUX+7nojAIav1sy8QCaHB8KHXRwByP3q2S5ie4tihh/PYghA+7CHpXxYVhCTzeH9R2kvApD9MrbWrOZcQw2jAQhsSzVC2QmTWpzcRgJqgNRhbd68zQ+6f3iFoDGAbnLIPGeZnOpVIH3mMQhAJa/eILoTCyaaxO2dFi8A6PCpi3cvK1XT6tTti3UgQA7C21RWma8MZ2hSlVEfCFCcNEebccEp8/Y9qH7GARTKmzvslw+uZxzcPlP78IDJFeZQUrO6mztMbJr3TmoDAH3iycPe+chryzgVJuLDiZ0P9GGyVTTfngUjfSi3j8x7PtDmcs/pgeqhiVjE+mvifTrQJpwsaMAs4W0J99M/XANIzU+uLQTJXjYzsQ0GNLtYZqXeXPHsFr9eLpwNtDcgOlvVtABDqvMuGAfow2RZxkdW7+3xgcevuzk68F3fNdT6FwAA///UmJOHFkbVEAAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3781438709002535131</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>2.1 壳尚空间</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                                <th>排名</th>
+                                <th>产品名称</th>
+                                <th>增长率</th>
+                                <th>产品图片</th>
+                                <th>二维码</th>
+                                <th>产品ID</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>日暮归途 适用华为mate70/70rs/60手机壳非凡大师无边框磨砂防撞</td>
+                            <td>45%-50%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_f1228fa194001b6fb97b6c21d9ad6154_sx_827148_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvElEQVR42uyYQY7rLBCEy2LBkiNwE3MxKzjKxcxNOAJLFpbrV7XfP8mbdwBjKYyyiOdbxFBUVze+67tuuDxJbkgtNwAR8Bs3THrabgRUPQtHeDZXTwTwpQFuJID0G+ZwwNVM+wJMLfM1HqBnFXFHT9rqEYFQ2iOsAByReNwQOPUR2BYsEkzqU59+KepqQJestDk82xJfdY9+67Mvv+7mxcCflbgic43ad/39Y3aXAr76jaWlhrAD0dWurZ5NHAMBJFJLfLYFriJ2cPOlTVzvBPCPFR9hjXvcY4dU/amo6wFEbl0nsWKJe9Q/+ixn1tGMAnhy08eKWqarHSxdzryMA8i1LA085VuVksdsetjvBID0hRseyHWJrPi/6v243PWAzgGTfV7V0ZmfWL1458kBAP3swDa1Ja7Y9VIHIP20YQCgJyCQa3iR3E95FK6B4wCePVHx4MlXBWRi0IPHrQCpGsAMJTFHvTULt3fVGwHwtNI86zzqAoUcHmp5fuLiCEA1O5htZ13drRXz/DiLAQBEqxaHdC0Li9rsPvH5tuIbAOZyM5RpFssPZE99DkMBFnj1DpRGqCRm5SNzHQeQFfepqYopm9v8oHR1vR9efTlQe9LPDk+yuqqQ02flR+SBAPmW6SHwTGLJb75wfXeLNwCsX5Bgni1TmraQo5UHAvQecygmGfmDJ6auoD4QoHbSH6G0BxDV89I6XulnHED+YOkw2+VDPHscPD679uEBXzv8gRnZ7uYOfw5A353aAICtiYciTs3W43QF9Y8kdj1wDpPPudwpGLU8+rpjHMDmcuQJyC4sLiL/NfG+HLAJp9oaAY6e54DjJz/cBiiWJ7M1QWbEqeXPcdMQgMXF5tT1VmUHnUVzbSDARl7aW2lagKfaSSwYBziHyYnkq6r2nu0Dj7/u5ujAd33XUOu/AAAA///MZZWjG+o4vgAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3767541055990399474</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>极地征程 适用华为mate70rs/60手机壳非凡大师无边框磨砂</td>
+                            <td>30%-35%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_0001501b3ae20f3ccc51037858e359df_sx_925851_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvUlEQVR42uyZwY3jPBSDaeigo0pQJ1ZjxshBGpM7UQk66mCYP/icfyfZLcAyEM1pPN8lDvVIvsH3fM8NjyfJgkRyByLgCw9MetpuBFQ9C0d4kBWGAJga4EYCSF+Q2g9czbRfpj61zOeAwNRyRdzREwuGBMLWfsIKwBFJergdAPitIbAtWCSY1PVdfCrqakCXbGtzeLQlPusefemz3/66mxcDr5O4InONeu/6+WfYXQr46gu3lhqChpirXa96NnEMBPRkn+LRFriK2MHitzZxvRNAFk8e4Qhr3OMeO6TqD0VdDiCydABhxRL3qD/0GXM49NWMAnjJeGMJjya/cLWDW58xtWUcQFMLU5MeAFepwXuYHvY7ASD9xgNArktkReowv/gz5a4HpGrLNAjP6ug0T2h+8ZsnBwCQLC4+GuKKHSRmb/ppwwCAhpimQ9C12yUPYOIaOA7g2RMVD3T1AA0x6MHPrQCpGtBYO3OY8uTW8et6IwCaci9rZl2wR6Went7i4gAAYFdvtjfr6m5VzPPjVV8OmF+oiFE5rKqIKebwwXdTGx6oLJh1Gc2aZc49dYShAJka9RkojVBJTLm85f+T2AiAipg+hT3JtP3B1tUu34r59QCSjM22B64q5HT5xYE8EECF2GYGcSaxZNFs/W2LNwDOvhDIR8uUps2pdfJAgBKECUbhqyJ6YjK/GAhQnfRHYMsKOdGWdDM0HzgOoKbYp9cCaVXlIQ/M+Hlv7cMDvnb4w/ziWV3d4YuVyd+mNgBwbjypUvOs2TqOBgjevPt64Fwmh6J3+xIMN4uLO8YBbC/32h5IDzbECvLHxvtywDacB2CAo+e54HjLDzcBNsuT2UqQbqGF3nUwwOJic3b5VMtZkJtrAwH2HxC9W2lagCflvAvGAc5lcqKGmLz3rA9vU+4OwPd8z1DnvwAAAP//I1Gg/Rg5AY8AAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3773114306577694852</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>日照雪山 雪山之巅适用华为mate70rs/60rs手机壳非凡大师无边框</td>
+                            <td>30%-35%</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_aece4b8ef5e8f74099b51e5263b5b2bc_sx_717937_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACvUlEQVR42uyZQW7DIBBFv+UFS47ATczFLGMrF8M34QizZGHxqxknbZoLGEth1/ZFKvBn/meC7/quGy5HkjszgLHMGAtZgUF/KzcCCuAyBhl4AIFE5M5dgLEngHQ7m/7jBSBrBNwuiY/OgOwpSWbMUKgOdegRwIQFqSAcAcCE+wF69Mx+9QdGIjBXvYv/iroasNKTyW8yh0c5gst1cvtnbV4LnMvrLtawAsGxai1+rGsBVypce6o6lbE4PWrlf/XQA+C0bzVPsiSORKzaZ1UeNwJo2hjYkKi6rtHtdULi2g+gblEjsyeP8CgkcP74p+nrAe0P3MVOF2MBEKvK/G8PHQDQhjAw+40sIwFqf2h+e3XamwCIrvls1jwWFmbupCyvVtwDoA2kRomyAGprIJkRucmMfgC67LK3o+YaRt1FQ5ShJ0ANAlHONrbiCLRT5ya/d3E9YBlGvdeSmGVa1xDJfyGndwCoqGrNDaOputoFCZD6AVTVPK05lZFHqJHN7bJ0BVBLTxXCR0m058OgHeL3LjoArImZkCWZCSM61gnD3QA893VY6AUs9L65XgcAEJkx+Y1HMFuLlnzaK4n1AGh+gOUwSSVpyIl1qPBvhtIBQNI1wDekMoexONZYJ/8m+w6Awoyzic1nErMpjAySbgSo69k2N67hOEWuGnrPkx0AZ1sTqDUHBPOLf3HxesBZjPUNi3/wwKGb0jcOfEfAcyoXZeAa1mBh8VWL9wEsT+5iA6QyhwNmzW8TkB6As9ZkOkuPh36iuYz0l8SuB57TpFfotUmtinzxPQHnMFn1cOgfg74mXMbyMW2+GLAJZxQrvYBwvhbZXk/zGwF+t3ea5ge9mqotj9IXsMvkV9uFWjOGOmHxXQEmmMlvMvJhgxpMTp33bZJzOfD8LsnzHIFqEtNPfNRm58B3fVdX6ycAAP//VsKyTcvWP0QAAAAASUVORK5CYII=" width="100" height="100"></td>
+                            <td>3780362237651321008</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>否极泰来 适用华为mate70rs/60rs手机壳非凡大师无边框磨砂轻薄</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_563e2800dc9efea34066f0bffe3fba92_sx_629026_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwUlEQVR42uyYQY6rMBBEC7Hw0kfwTfDFUHDExcxNfAQvvUDUV3WYJPPnADFSvBkNeRtDdVd143u+54LHkeTGjBuAsexAdAcGPa0XAgrgtjpU+LWM3INjG7hVYOwJIF3GBPg9rNzBrFvUhWtnwFYjWeewBxKxTV0C2WefvO4AtNiGdj0AcNkf/vAJiwST8VdRnwas9Ork73UOaxHQJrf9X5ufBewM3HjnShUfIvOfVvdhwBVmHpj84ck9ICBSpTfUpXYDAGSbMGGpC1nGItlyo+RxKSBzkzr8WhBYALsm/FMwHQABscEf/s4UWEY2QKo+fkqvB8CxRfmFT55lBq0zc6vDs4l1ACBYpQ1MfgfCWBpMHkMdLwRYl2ONVJdLYQ8Pv2Dy7AeQqluskcknGXNgbrrUWyPuAVA+9Kq2UYKhk2CUHsfaESCrtbhIxYOHqb21sB4AR5epeJAs0yKo8brDcvh1gNOaMx4mp9DL7Piu6h4Al51K78AckrqcVC2Rr/0Ajo/Sq0MdycJiP5P3t6j2cUAy5uEpgyhjUaelZH5T470M4Iife8maEeya2d9fftED0CxA8vArEzSrcWsWzDoCistQ7LphxgwN5hbMBv686g4AhHPK0RCmVw3YxuOVzHsAIKOtwM22B0qPiOKfIecKgCvNZl4sdQbCrsFcKZgvwXwesFtEst78yj3sj28hv3ia8+cBV1qUZEww8t4W2+TI+9NOOgAsLuqPbqF7NLjDbfX2K9N2DwQziCiDCBqBmDFZuT4bSAfAM+TYtzi7nP79k4I+B5zL5K0CS5nDrgw8OWt66Ac4l8m2ApUezgX48pJ9D4Atk/W61WlJxHMp/3vjfQFgswHC9rSaefX8LT90A1CzGhazZscGnzD2BDyWyRgeC9BgD+W8M/oBzmUyBibp4Rwf3qLaFYDv+Z6uzr8AAAD//62E6iJBoOJaAAAAAElFTkSuQmCC" width="100" height="100"></td>
+                            <td>3782024061622813295</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>玉龙雪山一帆风顺 适用华为mate60rs/非凡大师手机壳无边框轻防撞</td>
+                            <td>-</td>
+                            <td><img src="https://p3-aio.ecombdimg.com/obj/ecom-shop-material/png_m_e00ca3c88a2a0d3dc8e343827ec2ad81_sx_873153_www1000-1000" width="100" height="100"></td>
+                            <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAACwklEQVR42uyZwa37LBDEB/nAkRLoxDRm2Y7cGHRCCXvkgJhPi518yf8VECyFI/ld8Nudmd2H3/mdGx5LkonRkRVTrkCwiUlv5UZABmwSuB1Tnli9ZekXmEYCSBsRBK76gxWMlkyy8RgMSBJIWXz1JEIJxQwIRBfd7vQNgP58QwCw0TXX3I5NCybC8N+K+jbQW09m95DFH1mBMts/vfldoB/DxAcPHnkiAuMfqfsyYDMjG2bXVMY8PAIbjBjZZBigV2mQGZtsZJ6yXjBRy+NOgI1sjgJ3ZHhmoD8T7lUwAwCeLHDNPbh75okF0Kpuz9YbAbBEsBGz2x3zAnZlZhLzErEBAPjeaYa7q4CfckGZMcPIdCOgqxzFUFVu99WX7nrcHccBAMYSJGivqTF7RqpjvAnxCACCbQBWTFowtKcYr6+yHwJQqxW4BzXV4jS1NwkbAbC0UWO3qpZamsrFbBvWWwGXNUcNOAA09DIivFf1CICNljK7hsXvqnKxoAPHQIB+2yBBjExkZu4/kw9yIEBlTJ3XaA7LqrSqD7Kq8N4GUL243qXWDN+fmfiQN2v+PsBoGwybO7hDZzWmEmR7Bc4RgGwjNHatWLBAB3MNizB8fuoBgB7Fz0m89k8NMPWKeCbzEQBcI83atwfKaz3I9go5dwCeMy82WQBf+zRR9I+zjQMAp6zJ6g5WXz1QDMn9bQj6OmBzCZZixLB6nXlLYLPk4yXEAwA9LsJprx3UdxTYZpOsH5l2eMB3g9D+1N4kqVGNZ24bBjhDjqocrkUNm9XM85mCvgpcy+SkqSYvvmoGDqfoYRzgWiZjE3ith3MBju3/sh8B6Mvkq/VITQv9afK58b4BkBhdO/e0vu9p9dXbcIDqHLB1a7Ys/X8NIwGXqZlzAer7pTrvgnGAa5kMw13r4RofxHz25uDA7/zOUOe/AAAA//9QMQeYJYFIzQAAAABJRU5ErkJggg==" width="100" height="100"></td>
+                            <td>3765887267994992659</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 结论与建议</h2>
+            <div class="conclusion">
+                <p>根据对最近1天产品数据的分析，我们得出以下结论和建议：</p>
+                
+                <h4>热门产品趋势</h4>
+                <p>平台增长率较高的产品主要集中在<span class="highlight">[根据实际数据填写相关品类]</span>。</p>
+                
+                <h4>店铺竞争力</h4>
+                <p>从店铺维度看，<span class="highlight">[根据实际数据填写表现较好的店铺]</span>在增长率方面表现突出。</p>
+                
+                <h4>产品优化建议</h4>
+                <ul>
+                    <li>关注增长率较高的产品特点，借鉴其成功经验</li>
+                    <li>定期更新产品信息，保持数据的时效性</li>
+                    <li>结合市场趋势，适时调整产品策略</li>
+                </ul>
+                
+                <h4>数据质量评估</h4>
+                <p>本次分析基于<span class="highlight">[具体数据量]</span>条产品数据，数据完整性良好。</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>报告生成工具: 产品数据分析助手 v1.0 | 数据更新频率: 每日自动更新</p>
+        </div>
+    </div>
+</body>
+</html>

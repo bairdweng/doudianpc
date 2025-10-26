@@ -1,0 +1,81 @@
+{
+  "data": {
+    "peer_shop_list": [
+      {
+        "shop_id": "53877010",
+        "shop_name": "莱贺优品个体店",
+        "shop_logo": "https://p6-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/d0430b2f439744bcbc06fb6796888b3a~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793027006&x-signature=0ETGmuTnz7tzmWmd0JogOVlO87E%3D",
+        "shop_qr_code": "https://p3.douyinpic.com/img/aweme-qrcode/iMjPjs7565532547065726771~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥2500-¥5000",
+        "last_7_day_pay_amount_ratio": 0.04672897196261682
+      },
+      {
+        "shop_id": "191063513",
+        "shop_name": "华壳3C数码",
+        "shop_logo": "https://p3-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/164dd204624c45859e3005248ab353d0~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793026026&x-signature=Gv4K0S800J%2BwT8br9GH%2BmaPqnI8%3D",
+        "shop_qr_code": "https://p11.douyinpic.com/img/aweme-qrcode/Gjjxed7565532548709762866~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥750-¥1000",
+        "last_7_day_pay_amount_ratio": 0.02504854368932039
+      },
+      {
+        "shop_id": "51093187",
+        "shop_name": "壳小寻数码",
+        "shop_logo": "https://p3-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/ad029e33abfa45ab9b6a07f15e55cdc9~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793024154&x-signature=uGTaoJ7RI9zLE4ZLp%2FLdRRoPeF8%3D",
+        "shop_qr_code": "https://p11.douyinpic.com/img/aweme-qrcode/MnQNkI7565532547476621066~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥2500-¥5000",
+        "last_7_day_pay_amount_ratio": -0.1373114463176575
+      },
+      {
+        "shop_id": "169743761",
+        "shop_name": "灿晟数码严选工作室",
+        "shop_logo": "https://p6-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/3edff76ed2e44a71aa2a24d1739f1949~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793023823&x-signature=ar4%2B7JchtcAodK66zb5Hf3KQq5c%3D",
+        "shop_qr_code": "https://p11.douyinpic.com/img/aweme-qrcode/wdQjaj7565532548551280422~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥500-¥750",
+        "last_7_day_pay_amount_ratio": 0
+      },
+      {
+        "shop_id": "190894290",
+        "shop_name": "蛋壳数码3a",
+        "shop_logo": "https://p6-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/53446c68b2614be5a9163812a961ddfc~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793027093&x-signature=2WKi3XXa%2F6gzD9DL3OzG649fzb0%3D",
+        "shop_qr_code": "https://p3.douyinpic.com/img/aweme-qrcode/CLRZVF7565532547493545754~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥5000-¥7500",
+        "last_7_day_pay_amount_ratio": -0.04271111400481802
+      },
+      {
+        "shop_id": "163227614",
+        "shop_name": "守护者数码",
+        "shop_logo": "https://p3-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/84150cf645be41678d45c73e56466c15~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793023884&x-signature=%2BaPWgx7medvr78mwOvFD1RtdxPA%3D",
+        "shop_qr_code": "https://p11.douyinpic.com/img/aweme-qrcode/dIEecJ7565532546847606579~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥2500-¥5000",
+        "last_7_day_pay_amount_ratio": 0.039198606271777
+      },
+      {
+        "shop_id": "188142000",
+        "shop_name": "TUTUMADE",
+        "shop_logo": "https://p6-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/90b2a4223877413aaa6afd8148a0439c~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793024790&x-signature=mc0TwmLuU5Vj%2FoN2UU6EN5FwBfg%3D",
+        "shop_qr_code": "https://p3.douyinpic.com/img/aweme-qrcode/CXuVzg7565532547543795482~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥5000-¥7500",
+        "last_7_day_pay_amount_ratio": 0.00962646991007609
+      },
+      {
+        "shop_id": "188302266",
+        "shop_name": "壳尚空间",
+        "shop_logo": "https://p3-ecom-qualification-sign.ecombdimg.com/tos-cn-i-6vegkygxbk/7b083f3a2bae40458dc835b29e1f065a~tplv-6vegkygxbk-s:750.image?lk3s=c08c0450&x-expires=1793024894&x-signature=F54XPZ29TqUj4UmWHOH8PsQJCls%3D",
+        "shop_qr_code": "https://p11.douyinpic.com/img/aweme-qrcode/bylksG7565532549259314982~c5_720x720.webp?from=690306475",
+        "is_recommend": false,
+        "last_7_day_pay_amount": "¥1000-¥2500",
+        "last_7_day_pay_amount_ratio": 0.05703280318091451
+      }
+    ],
+    "total_shop_num": 8
+  },
+  "code": 200,
+  "message": ""
+}
